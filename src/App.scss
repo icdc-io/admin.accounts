@@ -1,0 +1,16 @@
+.location-accounts {
+  padding: 1.25rem;
+  background-color: white;
+  min-height: 82vh;
+
+  .wrong {
+    height: calc(100vh - 160px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+      text-align: center;
+    }
+  }
+}
