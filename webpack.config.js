@@ -375,9 +375,6 @@ module.exports = () => {
         exposes: {
           './accountsMicrofrontend': './src/accounts.js',
         },
-        // remotes: {
-        //   container: (mode === 'development' ? 'mainComponent@http://localhost:8080/general.js' : 'mainComponent@http://localhost:8080/general.js')
-        // },
         shared: {
           react: {
             singleton: true,
