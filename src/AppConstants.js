@@ -1,4 +1,5 @@
-export const BASE_URL = (process.env.NODE_ENV === 'production') ? `https://${location.host}/api` : 'https://api.icdc.d3.zby.icdc.io/api';
+const API_GATEWAY = process.env.API_GATEWAY || 'https://api-gw.icdc.d3.zby.icdc.io';
+const BASE_URL = `${API_GATEWAY}/api`;
 
 export const accountConnectUrl = (locationName, accountName) => `${BASE_URL}/accounts/v1/locations/${locationName}/accounts/${accountName}`;
 export const accountsDataAvailableUrl = (locationName) => `${BASE_URL}/accounts/v1/locations/${locationName}/available_accounts`;
