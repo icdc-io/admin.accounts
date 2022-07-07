@@ -12,7 +12,7 @@ const Accounts = ({ t, store }) => {
   }, []);
 
   return <Provider store={store}>
-    <Router>
+    <Router basename={process.env.NODE_ENV === 'production' ? '/admin' : ''}>
       <AccountsInfo t={t} />
     </Router>
   </Provider>;
