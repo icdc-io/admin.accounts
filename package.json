@@ -1,12 +1,12 @@
 {
-  "name": "icdc-networking-dns",
+  "name": "icdc-admin-accounts",
   "version": "0.0.1",
   "private": false,
   "author": "icdc",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://git.zby.icdc.io/icdc/networking/networking-dns"
+    "url": "https://git.zby.icdc.io/icdc/admin/accounts"
   },
   "scripts": {
     "start": "NODE_ENV=development webpack serve --hot",
@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "cogo-toast": "https://github.com/Voloshch/cogo",
+    "cogo-toast": "^4.2.3",
     "express": "^4.17.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

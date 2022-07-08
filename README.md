@@ -15,4 +15,3 @@ env='PRODUCTION'
 npm run build
 
 dist folder contain all static files
-
