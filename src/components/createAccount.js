@@ -5,7 +5,7 @@ import { Button, Dropdown, Form, Header, Radio, Loader } from 'semantic-ui-react
 import { createAccount, setupAccount } from '../AppActions';
 import { useDispatch, useSelector } from 'react-redux';
 import ValidInput from './validInput';
-import { email, idValidation, minLength, number, phoneNumber, positiveNumber, required, latinLetters } from '../utilities/validations';
+import { email, idValidation, minLength, number, phoneNumber, positiveNumber, required, nameWithSpace } from '../utilities/validations';
 import { countryOptions, initialState, quotasBody, taxIdOptions } from '../constants/createAccountData';
 
 const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
@@ -92,7 +92,7 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                 name='displayName'
                 placeholder={t('enterName')}
                 initialValue={form.general.display_name}
-                validFunctions={[required, latinLetters]}
+                validFunctions={[required, nameWithSpace]}
                 result={value => {
                     setForm(prevState => ({ ...prevState, general: { ...form.general, display_name: value } }));
                     setQuotas([...quotas].map(el => ({ ...el, quotas: { ... el.quotas,
