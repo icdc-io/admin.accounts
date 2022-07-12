@@ -7,7 +7,8 @@ const validationMessages = {
       email: 'Почта',
       phoneNumber: 'Введите корретный номер телефона, начинающийся на "+"',
       idValidation: 'Только строчные буквы, цифры, не более 5 символов',
-      latinLetters: 'Должны быть только латинские буквы'
+      latinLetters: 'Должны быть только латинские буквы',
+      nameWithSpace: 'Должны быть только латинские буквы, цифры'
   },
   en: {
       required: 'Required',
@@ -17,7 +18,8 @@ const validationMessages = {
       email: 'Email',
       phoneNumber: 'Enter a valid phone number, starting with a "+"',
       idValidation: 'Only lower case, latin letters, digits. Must be 5 characters or less',
-      latinLetters: 'Must be latin letters'
+      latinLetters: 'Must be latin letters',
+      nameWithSpace: 'Must be latin letters, digits'
   }
 };
 
@@ -48,4 +50,9 @@ export const idValidation = value => (
 export const latinLetters = value => (
 value && !value.match(/^[a-zA-Z ]+$/) ? 
   validationMessages[localStorage.getItem('icdc-lang') || 'en'].latinLetters :
+  undefined);
+
+export const nameWithSpace = value => (
+  value && !value.match(/^[a-zA-Z0-9 ]+$/) ?
+    validationMessages[localStorage.getItem('icdc-lang') || 'en'].nameWithSpace :
   undefined);
