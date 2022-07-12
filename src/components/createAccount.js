@@ -10,7 +10,7 @@ import { countryOptions, initialState, quotasBody, taxIdOptions } from '../const
 
 const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
     const accountRegistrationStatus = useSelector(state => state.AccountsStore.accountRegistrationStatus);
-    const user = useSelector(state => state.AccountsStore.user);
+    const user = useSelector(state => state.host.user);
     const dispatch = useDispatch();
 
     /* eslint camelcase: 0 */

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, Button, Divider, Input } from 'semantic-ui-react';
 import './deleteAccount.scss';
+import DangerousHTML from 'react-dangerous-html';
 
 const Disconnect = ({ t, open, onDisconnect, onCancel, accountData, isDeletingInProgress }) => {
     const [confirm, setConfirm] = useState('');
@@ -23,7 +24,7 @@ const Disconnect = ({ t, open, onDisconnect, onCancel, accountData, isDeletingIn
             <Divider />
             <Modal.Content style={{ paddingTop: '1rem' }} >
                 <div style={{ marginBottom: '1rem' }}>
-                    {t('confirmModal', { service: <b>{accountData?.displayName}</b> })}
+                    {<DangerousHTML html={t('confirmModal', { service: `<b>${accountData?.displayName}</b>` })} />}
                 </div>
                 <Input value={confirm} onChange={e => setConfirm(e.currentTarget.value)} style={{ width: '50%' }}/>
             </Modal.Content>
