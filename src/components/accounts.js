@@ -90,10 +90,6 @@ const LocationAccount = ({ t, history }) => {
             </div>
         }
 
-        if (statuses.includes('pending')) {
-            return <Loader size='medium' className='loader' active inline='centered' />
-        }
-
         return createMode ? <CreateAccount t={t} setCreateMode={setCreateMode} updateGrid={updateGrid}/> : <>
             <section>
                 <div className='accounts-wrapper'>
@@ -115,6 +111,7 @@ const LocationAccount = ({ t, history }) => {
                     isConnectionInProgress={connectStatus === 'pending'}
                     updateAvalibleGrid={updateAvalibleGrid} />}
                 <div>
+               {statuses.includes('pending') && <Loader size='medium' className='loader' active inline='centered' />}
                     <Table basic='very'>
                         <Table.Header>
                             <Table.Row>
