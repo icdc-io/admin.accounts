@@ -1,5 +1,5 @@
 import * as ActionTypes from './AppConstants';
-import API from './utilities/Api';
+import { fetchData, createData, deleteData } from 'container/Api';
 import cogoToast from 'cogo-toast';
 
 const notificationOptions = { position: 'top-right' };
@@ -14,53 +14,9 @@ const successNotification = () =>
 export const infoNotification = (msg) =>
     cogoToast.info(msg, notificationOptions);
 
-const expandHeaders = (headers) => {
-    const account = window.insights.getAccount();
-    const role = window.insights.getRole();
-    const location = window.insights.getLocation();
-
-    return {
-        ...headers,
-        Authorization: `Bearer ${window.insights.getToken()}`,
-        'x-icdc-account': headers['x-icdc-account'] || account,
-        'x-icdc-role': role,
-        'x-icdc-location': location
-    };
-};
-
-const base = (url, service) => {
-    const { locations } = window.insights.getUserInfo().external;
-    const location = window.insights.getLocation();
-
-    return `${locations[location]}/api/${service || 'admin'}/v1${url}`;
-};
-
-const fetchData = async (url, headers) => {
-    const fullUrl = url.includes('https://') ? url : base(url, service);
-    const response = await API.get(fullUrl, expandHeaders(headers));
-    return response.data;
-};
-
-const createData = async (url, payload, headers, service) => {
-    const fullUrl = url.includes('https://') ? url : base(url, service);
-    const response = await API.post(fullUrl, payload, expandHeaders(headers));
-    return response.data;
-};
-
-const updateData = async (url, payload, headers) => {
-    const response = await API.put(url, payload, expandHeaders(headers));
-    return response.data;
-};
-
-const deleteData = async (url, payload, headers, service) => {
-    const fullUrl = url.includes('https://') ? url : base(url, service);
-    const response = await API.delete(fullUrl, expandHeaders(headers), payload);
-    return response.data;
-};
-
 const fetchAccountsAvailableDataAction = (locationName) => ({
     type: ActionTypes.ACCOUNTS_AVAILABLE_FETCH,
-    payload: fetchData(ActionTypes.accountsDataAvailableUrl(locationName), {}, {}, 'accounts')
+    payload: fetchData(ActionTypes.accountsDataAvailableUrl(locationName), 'accounts')
 });
 
 export const fetchAccountsAvailableData = (locationName) => (dispatch) => {
@@ -86,7 +42,7 @@ export const fetchAccountsAvailableData = (locationName) => (dispatch) => {
 
 const fetchAccountsDataAction = (locationName) => ({
     type: ActionTypes.ACCOUNTS_DATA_FETCH,
-    payload: fetchData(ActionTypes.accountsDataUrl(locationName), {}, {}, 'accounts')
+    payload: fetchData(ActionTypes.accountsDataUrl(locationName), 'accounts')
 });
 
 export const fetchAccountsData = (locationName) => (dispatch) => {
@@ -111,7 +67,7 @@ export const fetchAccountsData = (locationName) => (dispatch) => {
 
 const connectAccountAction = (payload, account) => ({
     type: ActionTypes.ACCOUNTS_CONNECT,
-    payload: createData(ActionTypes.accountConnectUrl(payload.location, account), payload, {}, 'accounts')
+    payload: createData(ActionTypes.accountConnectUrl(payload.location, account), payload, 'accounts')
 });
 
 export const connectAccount = (payload) => {
@@ -132,12 +88,12 @@ export const connectAccount = (payload) => {
 
 const disconnectAccountAction = (payload) => ({
     type: ActionTypes.ACCOUNT_DISCONNECT,
-    payload: deleteData(ActionTypes.accountConnectUrl(payload.location, payload.accountId), {}, {}, 'accounts')
+    payload: deleteData(ActionTypes.accountConnectUrl(payload.location, payload.accountId), 'accounts')
 });
 
 const destroyInfrastructureAction = (payload) => ({
     type: ActionTypes.DESTROY_ACCOUNT,
-    payload: deleteData(ActionTypes.setupAccountUrl(payload.accountId), {}, {}, 'setup')
+    payload: deleteData(ActionTypes.setupAccountUrl(payload.accountId), 'setup')
 });
 
 export const disconnectAccount = (payload) => (dispatch) => {
@@ -161,7 +117,7 @@ export const resetStatusAccount = () => ({
 
 const setupAccountAction = (setupBody) => ({
     type: ActionTypes.SETUP_ACCOUNT,
-    payload: createData(ActionTypes.setupAccountUrl(setupBody.accountName), setupBody.quotas, {}, 'setup')
+    payload: createData(ActionTypes.setupAccountUrl(setupBody.accountName), setupBody.quotas, 'setup')
 });
 
 export const setupAccount = (payload) => (dispatch) => {
@@ -177,7 +133,7 @@ export const setupAccount = (payload) => (dispatch) => {
 
 const createAccountAction = (payload) => ({
     type: ActionTypes.ACCOUNTS_REGISTRATION,
-    payload: createData(ActionTypes.ACCOUNTS_REGISTRATION_URL, payload, {}, 'accounts')
+    payload: createData(ActionTypes.ACCOUNTS_REGISTRATION_URL, payload, 'accounts')
 });
 
 export const createAccount = (payload) => (dispatch) => {

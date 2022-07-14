@@ -51,9 +51,7 @@
     "workbox-webpack-plugin": "^6.4.2"
   },
   "dependencies": {
-    "axios": "^0.26.1",
     "cogo-toast": "^4.2.3",
-    "express": "^4.17.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dangerous-html": "^1.0.0",

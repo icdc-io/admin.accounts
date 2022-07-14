@@ -34,7 +34,7 @@ const LocationAccount = ({ t, history }) => {
     };
 
     const updateGrid = () => {
-        dispatch(fetchAccountsData(location));
+        account && dispatch(fetchAccountsData(location));
     };
 
     const onConnect = (accountsToConnect, quotas) => {
@@ -88,6 +88,10 @@ const LocationAccount = ({ t, history }) => {
             return <div className='wrong'>
                 <h3>{t('errorDescription')}</h3>
             </div>
+        }
+
+        if (accountsDataFetchStatus === 'pending') {
+            return <Loader active inline='centered' />;
         }
 
         return createMode ? <CreateAccount t={t} setCreateMode={setCreateMode} updateGrid={updateGrid}/> : <>
