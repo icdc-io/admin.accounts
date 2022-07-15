@@ -7,7 +7,7 @@ const initialState = Immutable({
     allAccounts: [],
     allAccountsFetchStatus: '',
     accountsData: [],
-    accountsDataFetchStatus: '',
+    accountsDataFetchStatus: 'pending',
     connectStatus: '',
     disconnectStatus: '',
     accountRegistrationStatus: '',

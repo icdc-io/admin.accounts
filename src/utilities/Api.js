@@ -12,7 +12,7 @@ export default {
             headers
         });
     },
-    post(url, headers = {}, data = {}) {
+    post(url, data = {}, headers = {}) {
         return axios.post(url, data, {
             headers
         });
