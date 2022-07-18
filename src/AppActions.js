@@ -30,7 +30,7 @@ export const fetchAccountsAvailableData = (locationName) => (dispatch) => {
             idIcdc: account.name,
             name: `${account.contact.first_name} ${account.contact.last_name}`,
             email: account.email,
-            phone: account.phone,
+            phone: account.contact.phone,
             isChecked: false
         }));
         dispatch({
@@ -56,7 +56,7 @@ export const fetchAccountsData = (locationName) => (dispatch) => {
             idIcdc: account.name,
             name: `${account.contact.first_name} ${account.contact.last_name}`,
             email: account.email,
-            phone: account.phone
+            phone: account.contact.phone
         }));
         dispatch({
             type: `${ActionTypes.ACCOUNTS_DATA_FETCH}_FULFILLED`,
