@@ -51,6 +51,10 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
         : dispatch(createAccount({ ...form, payment_methods: [], locations: [...form.locations, user.location] }));
     };
 
+    console.log('quotas')
+    console.log(quotas)
+    console.log('quotas')
+
     const disabled = form.general.display_name === ''
 	|| form.name === ''
 	|| form.general.contact.email === ''
@@ -98,7 +102,8 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                     setQuotas([...quotas].map(el => ({ ...el, quotas: { ... el.quotas,
                         compute: { ...el.quotas.compute, description: value },
                         storage: { ...el.quotas.storage, description: value },
-                        networking: { ...el.quotas.networking, description: value } } }))
+                        networking: { ...el.quotas.networking, description: value },
+                        billing_engine: { ...el.quotas.networking, description: value } } }))
                     );}} />
             <ValidInput
                 label='ID'
@@ -350,4 +355,3 @@ CreateAccount.propTypes = {
 };
 
 export default CreateAccount;
-
