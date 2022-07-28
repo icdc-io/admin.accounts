@@ -23,12 +23,14 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
 
     useEffect(()=> {
         setQuotas(accounts.filter(x => x.isChecked).map(el => ({ accountName: el.id,
-            quotas: { compute: { description: el.displayName },
+            quotas: { 
+                compute: { description: el.displayName },
                 storage: { description: el.displayName },
-                networking: { description: el.displayName }
+                networking: { description: el.displayName },
+                billing_engine: { description: el.displayName }
             }
         })));
-}, [accounts]);
+    }, [accounts]);
 
     const toggleCheckBox = (id) => {
         setAccounts(accounts.map(a => a.id === id ? { ...a, isChecked: !a.isChecked } : a));
