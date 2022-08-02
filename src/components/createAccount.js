@@ -51,10 +51,6 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
         : dispatch(createAccount({ ...form, payment_methods: [], locations: [...form.locations, user.location] }));
     };
 
-    console.log('quotas')
-    console.log(quotas)
-    console.log('quotas')
-
     const disabled = form.general.display_name === ''
 	|| form.name === ''
 	|| form.general.contact.email === ''
