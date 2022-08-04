@@ -52,6 +52,11 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
             || x.phone.toLowerCase().includes(value)));
     }, [allAccounts]);
 
+    const cancelModal = () => {
+        setAccounts(accounts.map(a => ({ ...a, isChecked: false })));
+        onCancel();
+    };
+
     const selectAccountsList = accounts.map((el) => (
         <Table.Row key={el.id} className='connectElements'>
             <Table.Cell style={{ paddingLeft: '0' }}>
@@ -72,7 +77,7 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
     return (
         <Modal size='large' open={open}>
             <Modal.Content>
-                <div className='close-btn' onClick={onCancel}></div>
+                <div className='close-btn' onClick={cancelModal}></div>
                 <label className='title'>{t('selectAccounts')}</label>
                 <p className='description'>{t('connectDescription')}</p>
                 <Input className='search'
@@ -105,7 +110,7 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
                     <p><span>{accounts.filter(x => x.isChecked).length}</span>{t('selected')}</p>
                     <Button disabled={isConnectionInProgress}
                         content={t('cancel')}
-                        onClick={onCancel} />
+                        onClick={cancelModal} />
                     <Button disabled={isConnectionInProgress || accounts.filter(x => x.isChecked).length === 0}
                         color='blue'
                         content={t('connectSelected')}
