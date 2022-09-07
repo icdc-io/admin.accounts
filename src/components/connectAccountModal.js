@@ -53,7 +53,7 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
     }, [allAccounts]);
 
     const cancelModal = () => {
-        setAccounts(accounts.map(a => ({ ...a, isChecked: false })));
+        setAccounts(allAccounts);
         onCancel();
     };
 
