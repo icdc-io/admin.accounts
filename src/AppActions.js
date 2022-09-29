@@ -60,7 +60,7 @@ export const fetchAccountsData = (locationName) => (dispatch) => {
         }));
         dispatch({
             type: `${ActionTypes.ACCOUNTS_DATA_FETCH}_FULFILLED`,
-            payload: _.sortBy(accountData, (o) => { return o.displayName; })
+            payload: accountData.sort((a, b) => a.displayName > b.displayName ? 1 : a.displayName < b.displayName ? -1 : 0)
         });;
     }, error => errorNotification(error.response?.statusText));
 };
