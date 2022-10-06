@@ -62,7 +62,6 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
-    .filter(key => REACT_APP.test(key))
     .reduce(
       (env, key) => {
         env[key] = process.env[key];
