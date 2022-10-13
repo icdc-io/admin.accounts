@@ -5,7 +5,7 @@ import { Button, Dropdown, Form, Header, Radio, Loader } from 'semantic-ui-react
 import { createAccount, setupAccount } from '../AppActions';
 import { useDispatch, useSelector } from 'react-redux';
 import ValidInput from './validInput';
-import { email, idValidation, minLength, number, phoneNumber, positiveNumber, required, nameWithSpace } from '../utilities/validations';
+import { email, idValidation, minLength, number, phoneNumber, required, nameWithSpace } from '../utilities/validations';
 import { countryOptions, initialState, quotasBody, taxIdOptions } from '../constants/createAccountData';
 
 const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
@@ -154,7 +154,14 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                 <Dropdown selection options={businessTypeOptions} style={{ width: '100%' }}
                     onChange={(param, data) => setBusinessType(data.value)} defaultValue={businessTypeOptions[0].value}/>
             </div>
-
+            {businessType !== 'Legal Entity' && <ValidInput
+                    popupContent={t('customerNamePrompt')}
+                    label={t('customerFullName')}
+                    name='customerFullName'
+                    placeholder={t('enterCustomerFullName')}
+                    initialValue={form.billing.name}
+                    validFunctions={[required, nameWithSpace]}
+                    result={value => setForm({ ...form, billing: { ...form.billing, name: value } })} />}
             {businessType === 'Legal Entity' && <div>
                 <ValidInput
                     label={t('organizationName')}
@@ -215,7 +222,7 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                 name='zipCode'
                 placeholder={t('enterZip')}
                 initialValue={form.billing.address.postal_code}
-                validFunctions={[required, number, positiveNumber]}
+                validFunctions={[required]}
                 result={value => setForm({ ...form, billing: { ...form.billing, address: { ...form.billing.address, postal_code: value } } })} />
 
             {businessType === 'Legal Entity' && <div>
