@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Input } from 'semantic-ui-react';
+import { Icon, Input, Popup } from 'semantic-ui-react';
 
-const ValidInput = ({ label, name, type = 'text', initialValue, validFunctions, result, placeholder }) => {
+const ValidInput = ({ label, name, type = 'text', initialValue, validFunctions, result, placeholder, popupContent }) => {
     const [value, setValue] = useState(initialValue || '');
     const [messageError, setMessageError] = useState('');
     const isPassword = type === 'password' && initialValue;
@@ -39,7 +39,16 @@ const ValidInput = ({ label, name, type = 'text', initialValue, validFunctions, 
     messageError && inputClass.push('invalid');
 
     return <div className='general-input'>
-        <label htmlFor={name}>{label}</label>
+        <div className='popup-flex'>
+            <label htmlFor={name}>{label}</label>
+            {popupContent && <Popup
+                                trigger={ <Icon name='question circle outline'/> }
+                                content={popupContent}
+                                position='bottom left'
+                                inverted
+                            />
+            }
+        </div>
         <Input
             type={type}
             name={name}

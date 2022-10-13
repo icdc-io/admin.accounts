@@ -98,3 +98,11 @@ margin-bottom: 0px;
   margin-top: 20px;
   align-items: center;
 }
+.popup-flex {
+  display: flex;
+  align-items: center;
+
+  i {
+    margin: 4px 0 0 2px;
+  }
+}
