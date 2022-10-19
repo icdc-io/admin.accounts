@@ -9,6 +9,7 @@ import './locationAccount.scss';
 import { connectAccount, disconnectAccount, fetchAccountsAvailableData, fetchAccountsData, resetStatusAccount, setupAccount } from '../AppActions';
 import CreateAccount from './createAccount';
 import { withRouter } from 'react-router-dom';
+import ErrorPage from './errorPage';
 
 const LocationAccount = ({ t, history }) => {
     const [isOpenDisconnectModal, setIsOpenDisconnectModal] = useState(false);
@@ -85,9 +86,7 @@ const LocationAccount = ({ t, history }) => {
         const statuses = [accountsDataFetchStatus, disconnectStatus];
 
         if (statuses.includes('rejected')) {
-            return <div className='wrong'>
-                <h3>{t('errorDescription')}</h3>
-            </div>
+            return <ErrorPage t={t} />
         }
 
         if (accountsDataFetchStatus === 'pending') {
