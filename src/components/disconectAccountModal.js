@@ -16,7 +16,7 @@ const Disconnect = ({ t, open, onDisconnect, onCancel, accountData, isDeletingIn
                 <label className='title-deleteForm'>{t('disconnectAccount')}</label>
                 <div className='descr-deleteForm'>
                     <span>{t('disconnectAccountMess1')}</span>
-                    <span className='nameAccount'>{accountData?.displayName}</span>
+                    <span className='nameAccount'>{accountData?.displayName?.replace('&quot;', '"')}</span>
                     <span>{t('disconnectAccountMess2')}</span>
                 </div>
                 <div className='warning'>{t('disconnectAccountWarning')}</div>
@@ -31,7 +31,7 @@ const Disconnect = ({ t, open, onDisconnect, onCancel, accountData, isDeletingIn
             <Modal.Actions align='right'>
                 <Button disabled={isDeletingInProgress} content={t('cancel')} onClick={closeModal} />
                 <Button negative
-                    disabled={isDeletingInProgress || confirm !== accountData?.displayName}
+                    disabled={isDeletingInProgress || confirm !== accountData?.displayName?.replace('&quot;', '"')}
                     content={t('disconnect')}
                     onClick={() => { onDisconnect(); closeModal(); }} />
             </Modal.Actions>
