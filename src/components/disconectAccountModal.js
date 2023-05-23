@@ -24,7 +24,7 @@ const Disconnect = ({ t, open, onDisconnect, onCancel, accountData, isDeletingIn
             <Divider />
             <Modal.Content style={{ paddingTop: '1rem' }} >
                 <div style={{ marginBottom: '1rem' }}>
-                    {<DangerousHTML html={t('confirmModal', { service: `<b>${accountData?.displayName}</b>` })} />}
+                    {<DangerousHTML html={t('confirmModalDisconnect', { service: `<b>${accountData?.displayName}</b>` })} />}
                 </div>
                 <Input value={confirm} onChange={e => setConfirm(e.currentTarget.value)} style={{ width: '50%' }}/>
             </Modal.Content>

@@ -54,13 +54,11 @@ input[type="checkbox"] + span {
   cursor: pointer;
 }
 
-input[type="checkbox"]:checked + span {
-  .check-circle {
-    width: 8px;
-    height: 8px;
-    border-radius: 0.6rem;
-    background: #2185d0;
-  }
+input[type="checkbox"] + span .check-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 0.6rem;
+  background: #2185d0;
 }
 
 .btn-selectModal {
