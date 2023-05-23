@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 
 const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, updateAvalibleGrid }) => {
     const [accounts, setAccounts] = useState([]);
+    const [selectedAccounts, setSelectedAccounts] = useState([]);
 
     const [quotas, setQuotas] = useState([]);
 
@@ -32,28 +33,50 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
         })));
     }, [accounts]);
 
-    const toggleCheckBox = (id) => {
-        setAccounts(accounts.map(a => a.id === id ? { ...a, isChecked: !a.isChecked } : a));
+    const toggleCheckBox = (id) => (e) => {
+        setAccounts(accounts.map(a => a.id === id ? { ...a, isChecked: e.target.checked } : a));
+
+        const itemIndex = selectedAccounts.findIndex(item => item.id === id);
+        if (itemIndex === -1 && e.target.checked) {
+          const newItem = accounts.find(item => item.id === id);
+          if (newItem) {
+            setSelectedAccounts(prev => [...prev, { ...newItem, isChecked: true }])
+          }
+        } else if (itemIndex !== -1 && !e.target.checked) {
+          setSelectedAccounts(selectedAccounts.filter(item => item.id !== id))
+        }
+      
     };
 
     const onConnectHandler = () => {
-        onConnect(accounts.filter(x => x.isChecked).map(x => x.id), quotas);
+        onConnect(selectedAccounts.map(x => x.id), quotas);
     };
 
     const handleSearch = useCallback((e) => {
         const value = e.target.value.toLowerCase();
-        if (!value) { setAccounts(allAccounts); }
+        if (!value) {
+            setAccounts(allAccounts.map(acc =>
+                selectedAccounts.find(accSelected => accSelected.id === acc.id)
+                  ? { ...acc, isChecked: true }
+                  : acc
+              ));
+         } else {
+            setAccounts(allAccounts.filter(x =>
+                x.displayName.toLowerCase().includes(value)
+                || x.idIcdc.toLowerCase().includes(value)
+                || x.name.toLowerCase().includes(value)
+                || x.email.toLowerCase().includes(value)
+                || x.phone.toLowerCase().includes(value))
+                .map(acc => acc.id === selectedAccounts.find(accSelected => accSelected.id === acc.id)?.id ? ({ ...acc, isChecked: true }) : acc)
+                );
+         }
 
-        setAccounts(allAccounts.filter(x =>
-            x.displayName.toLowerCase().includes(value)
-            || x.idIcdc.toLowerCase().includes(value)
-            || x.name.toLowerCase().includes(value)
-            || x.email.toLowerCase().includes(value)
-            || x.phone.toLowerCase().includes(value)));
-    }, [allAccounts]);
+       
+    }, [allAccounts, selectedAccounts]);
 
     const cancelModal = () => {
         setAccounts(allAccounts);
+        setSelectedAccounts([]);
         onCancel();
     };
 
@@ -61,9 +84,9 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
         <Table.Row key={el.id} className='connectElements'>
             <Table.Cell style={{ paddingLeft: '0' }}>
                 <label>
-                    <input type='checkbox' value={el.isChecked} onClick={() => { toggleCheckBox(el.id); }} />
+                    <input type='checkbox' value={el.isChecked} onClick={toggleCheckBox(el.id)} />
                     <span>
-                        <div className='check-circle'></div>
+                        <div className={el.isChecked ? 'check-circle' : ''}></div>
                     </span>
                 </label>
             </Table.Cell>
@@ -107,11 +130,11 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
                         </Table>}
                 </div>
                 <Modal.Actions className='btn-selectModal'>
-                    <p><span>{accounts.filter(x => x.isChecked).length}</span>{t('selected')}</p>
+                    <p><span>{selectedAccounts.length}</span>{t('selected')}</p>
                     <Button disabled={isConnectionInProgress}
                         content={t('cancel')}
                         onClick={cancelModal} />
-                    <Button disabled={isConnectionInProgress || accounts.filter(x => x.isChecked).length === 0}
+                    <Button disabled={isConnectionInProgress || selectedAccounts.length === 0}
                         color='blue'
                         content={t('connectSelected')}
                         onClick={onConnectHandler} />
