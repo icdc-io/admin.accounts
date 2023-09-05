@@ -99,7 +99,8 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                         compute: { ...el.quotas.compute, description: value },
                         storage: { ...el.quotas.storage, description: value },
                         networking: { ...el.quotas.networking, description: value },
-                        billing_engine: { ...el.quotas.networking, description: value } } }))
+                        billing_engine: { ...el.quotas.networking, description: value },
+                        artifactory: { ...el.quotas.artifactory, description: value } } }))
                     );}} />
             <ValidInput
                 label='ID'

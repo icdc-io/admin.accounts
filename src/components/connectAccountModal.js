@@ -28,7 +28,8 @@ const SelectAccounts = ({ t, open, onConnect, onCancel, isConnectionInProgress, 
                 compute: { description: el.displayName },
                 storage: { description: el.displayName },
                 networking: { description: el.displayName },
-                billing_engine: { description: el.displayName }
+                billing_engine: { description: el.displayName },
+                artifactory: { description: el.displayName }
             }
         })));
     }, [accounts]);

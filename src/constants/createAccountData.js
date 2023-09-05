@@ -71,6 +71,9 @@ export const quotasBody = [{
         },
         billing_engine: {
             description: ''
+        },
+        artifactory: {
+            description: ''
         }
     },
     accountName: ''
