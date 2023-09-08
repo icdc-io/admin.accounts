@@ -70,7 +70,7 @@ const LocationAccount = ({ t, history }) => {
     const accountList = accountsData.map((el) => (
         <Table.Row key={el.id}>
             <Table.Cell className='nameColumn firstColumnCell'>{el.displayName}</Table.Cell>
-            <Table.Cell>{el.idIcdc}</Table.Cell>
+            <Table.Cell>{el.idIcdc?.toUpperCase()}</Table.Cell>
             <Table.Cell>{el.name}</Table.Cell>
             <Table.Cell>{el.email}</Table.Cell>
             <Table.Cell>{el.phone}</Table.Cell>
