@@ -67,7 +67,7 @@ const LocationAccount = ({ t, history }) => {
 
     useEffect(updateGrid, [location, account]);
 
-    const accountList = accountsData.map((el) => (
+    const accountList = [...accountsData].sort((a,b) => a.idIcdc > b.idIcdc ? 1 : -1).map((el) => (
         <Table.Row key={el.id}>
             <Table.Cell className='nameColumn firstColumnCell'>{el.displayName}</Table.Cell>
             <Table.Cell>{el.idIcdc?.toUpperCase()}</Table.Cell>
