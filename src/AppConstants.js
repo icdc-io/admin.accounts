@@ -1,4 +1,4 @@
-const API_GATEWAY = process.env.API_GATEWAY || 'https://api-gw.icdc.d3.zby.icdc.io';
+const API_GATEWAY = process.env.API_GATEWAY;
 const BASE_URL = `${API_GATEWAY}/api`;
 
 export const accountConnectUrl = (locationName, accountName) => `${BASE_URL}/accounts/v1/locations/${locationName}/accounts/${accountName}`;

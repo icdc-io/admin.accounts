@@ -44,11 +44,26 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
         }
     }, [accountRegistrationStatus]);
 
-    const createNewAccount = () => {businessType === 'Legal Entity'
-        ? dispatch(createAccount({ ...form,
+    const createNewAccount = () => {
+        const body = businessType === 'Legal Entity' ? {
+            ...form,
             locations: [...form.locations, user.location],
-            payment_methods: [...form.payment_methods].map(el => ({ ...el, service_provider: user.account, type: 'bank_transfer' })) }))
-        : dispatch(createAccount({ ...form, payment_methods: [], locations: [...form.locations, user.location] }));
+            payment_methods: [...form.payment_methods].map(el => ({ ...el, service_provider: user.account, type: 'bank_transfer' }))
+        } : {
+            ...form,
+            billing: {
+                ...form.billing,
+                email: form.general.email,
+                phone: form.general.phone,
+                contact: {
+                    ...form.general.contact
+                }
+            },
+            payment_methods: [],
+            locations: [...form.locations, user.location]
+        };
+        
+        dispatch(createAccount(body));
     };
 
     const disabled = form.general.display_name === ''
