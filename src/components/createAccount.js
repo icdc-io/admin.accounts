@@ -22,6 +22,7 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
     const [quotas, setQuotas] = useState(quotasBody);
     const [businessType, setBusinessType] = useState(businessTypeOptions[0].value);
     const [taxExempt, setTaxExempt] = useState(false);
+    const isLegalEntity = businessType === 'Legal Entity';
 
     useEffect(() => {
         !taxExempt
@@ -30,7 +31,7 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
     }, [taxExempt]);
 
     useEffect(() => {
-        businessType === 'Legal Entity'
+        isLegalEntity
             ? setForm({ ...form, billing: { ...form.billing, tax_id_type: taxIdOptions[0].value, tax_exempt: 'none' } })
             : setForm({ ...form, billing: { ...form.billing, tax_id_type: '',  tax_exempt: '' } });
     }, [businessType]);
@@ -45,8 +46,13 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
     }, [accountRegistrationStatus]);
 
     const createNewAccount = () => {
-        const body = businessType === 'Legal Entity' ? {
+        const body = isLegalEntity ? {
             ...form,
+            billing: {
+                ...form.billing,
+                email: form.general.email,
+                phone: form.general.phone,
+            },
             locations: [...form.locations, user.location],
             payment_methods: [...form.payment_methods].map(el => ({ ...el, service_provider: user.account, type: 'bank_transfer' }))
         } : {
@@ -62,7 +68,6 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
             payment_methods: [],
             locations: [...form.locations, user.location]
         };
-        
         dispatch(createAccount(body));
     };
 
@@ -155,14 +160,14 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                 placeholder={t('enterEmail')}
                 initialValue={form.general.contact.email}
                 validFunctions={[required, email]}
-                result={value => setForm({ ...form, general: { ...form.general, email: value,  contact: { ...form.general.contact, email: value } } })} />
+                result={value => setForm({ ...form, general: { ...form.general, email: isLegalEntity ? form.general.email : value,  contact: { ...form.general.contact, email: value } } })} />
             <ValidInput
                 label={t('phone')}
                 name='phone'
                 placeholder={t('enterPhone')}
                 initialValue={form.general.contact.phone}
                 validFunctions={[required, phoneNumber]}
-                result={value => setForm({ ...form, general: { ...form.general, phone: value, contact: { ...form.general.contact, phone: value } } })} />
+                result={value => setForm({ ...form, general: { ...form.general, phone: isLegalEntity ? form.general.phone : value, contact: { ...form.general.contact, phone: value } } })} />
 
             <Header as='h3'>{t('businessInfo')}</Header>
             <div className='general-input'>
@@ -170,7 +175,7 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                 <Dropdown selection options={businessTypeOptions} style={{ width: '100%' }}
                     onChange={(param, data) => setBusinessType(data.value)} defaultValue={businessTypeOptions[0].value}/>
             </div>
-            {businessType !== 'Legal Entity' && <ValidInput
+            {!isLegalEntity && <ValidInput
                     popupContent={t('customerNamePrompt')}
                     label={t('customerFullName')}
                     name='customerFullName'
@@ -178,7 +183,7 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                     initialValue={form.billing.name}
                     validFunctions={[required, nameWithSpace]}
                     result={value => setForm({ ...form, billing: { ...form.billing, name: value } })} />}
-            {businessType === 'Legal Entity' && <div>
+            {isLegalEntity && <div>
                 <ValidInput
                     label={t('organizationName')}
                     name='organizationName'
@@ -192,17 +197,17 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                     placeholder={t('enterPhone')}
                     initialValue={form.billing.phone}
                     validFunctions={[required, phoneNumber]}
-                    result={value => setForm({ ...form, billing: { ...form.billing, phone: value } })} />
+                    result={value => setForm({ ...form, billing: { ...form.billing, phone: value }, general: { ...form.general, phone: value } })} />
                 <ValidInput
                     label={t('email')}
                     name='email'
                     placeholder={t('enterEmail')}
                     initialValue={form.billing.email}
                     validFunctions={[required, email]}
-                    result={value => setForm({ ...form, billing: { ...form.billing, email: value } })} />
+                    result={value => setForm({ ...form, billing: { ...form.billing, email: value }, general: { ...form.general, email: value } })} />
             </div>}
 
-            <Header as='h3'>{businessType === 'Legal Entity'
+            <Header as='h3'>{isLegalEntity
                 ? t('address')
                 : t('residenceAddress')}</Header>
             <ValidInput
@@ -241,7 +246,7 @@ const CreateAccount = ({ t, setCreateMode, updateGrid }) => {
                 validFunctions={[required]}
                 result={value => setForm({ ...form, billing: { ...form.billing, address: { ...form.billing.address, postal_code: value } } })} />
 
-            {businessType === 'Legal Entity' && <div>
+            {isLegalEntity && <div>
                 <Header as='h3' style={{ marginTop: '20px' }}>{t('billingInfo')}</Header>
                 <ValidInput
                     label={t('taxId')}
