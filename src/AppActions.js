@@ -55,7 +55,7 @@ export const fetchAccountsData = (locationName) => (dispatch) => {
             displayName: account.display_name,
             idIcdc: account.name,
             name: `${account.contact.first_name} ${account.contact.last_name}`,
-            email: account.email,
+            email: account.contact.email,
             phone: account.contact.phone
         }));
         dispatch({
