@@ -1,14 +1,16 @@
-# Accounts - Admin Remote App
+# ISCSI - Storage Remote App
 
 npm i --legacy-peer-deps - to avoid errors with old dependencies in libraries
 
-_________________________
+---
 
 env='DEVELOPMENT":
 
-npm run start - run on port 8083
+npm run start
 
-_________________________
+open localhost:8002
+
+---
 
 env='PRODUCTION'
 

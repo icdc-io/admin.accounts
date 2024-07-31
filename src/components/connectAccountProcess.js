@@ -1,23 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Loader, Modal } from 'semantic-ui-react';
-import './locationAccount.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { Loader, Modal } from "semantic-ui-react";
+import "./locationAccount.scss";
+import { useTranslation } from "react-i18next";
 
-const ConnectProcessModal = ({ t, open }) => (
-    <Modal size='small' open={open} className='connectingAccounts'>
-        <Modal.Content>
-            <label className='title-connectingAccounts'>{t('connecting')}</label>
-            <div className='descr-connectingAccounts'>
-            <Loader size='medium' inline='centered' />    
-                <span>{t('connectingMessage')}</span>
-            </div>
-        </Modal.Content>
+const ConnectProcessModal = ({ open }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Modal size="small" open={open} className="connectingAccounts">
+      <Modal.Content>
+        <label className="title-connectingAccounts">{t("connecting")}</label>
+        <div className="descr-connectingAccounts">
+          <Loader size="medium" inline="centered" />
+          <span>{t("connectingMessage")}</span>
+        </div>
+      </Modal.Content>
     </Modal>
-);
+  );
+};
 
 ConnectProcessModal.propTypes = {
-    t: PropTypes.func,
-    open: PropTypes.bool
+  open: PropTypes.bool,
 };
 
 export default ConnectProcessModal;

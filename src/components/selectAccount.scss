@@ -104,14 +104,14 @@ input[type="checkbox"] + span .check-circle {
   }
 }
 
-.table-wrapper{
+.table-wrapper {
   margin: 30px 0;
 }
 
 .ui.dimmer .ui.modal .ui.loader:before {
-  border-color: rgba(0,0,0,.1);
+  border-color: rgba(0, 0, 0, 0.1);
 }
-          
+
 .ui.dimmer .ui.modal .ui.loader:after {
   border-color: #767676 transparent transparent;
 }
