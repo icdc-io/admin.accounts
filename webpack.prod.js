@@ -38,36 +38,6 @@ const prodConfig = {
         parallel: 4,
       }),
     ],
-    splitChunks: {
-      chunks: "all",
-      minSize: 0,
-      name: false,
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          reuseExistingChunk: true,
-          name: "defaultVendors",
-        },
-        // asyncVendors: {
-        //   test: /[\\/]node_modules[\\/]/,
-        //   priority: 10,
-        //   reuseExistingChunk: true,
-        //   chunks: "async",
-        //   name: (module, chunks, cacheGroupKey) =>
-        //     uniqueName(module, chunks, cacheGroupKey),
-        // },
-        default: {
-          priority: -20,
-          reuseExistingChunk: true,
-          minChunks: 2,
-          name: "default",
-        },
-      },
-    },
-    chunkIds: "deterministic",
-    runtimeChunk: "single",
-    moduleIds: "deterministic",
   },
   devtool: false,
   module: {
