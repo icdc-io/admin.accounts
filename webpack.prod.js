@@ -8,8 +8,8 @@ const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const isStats = process.env.STATS === "true";
 const mode = process.env.ANALYZE ?? "disabled";
-// const Dotenv = require("dotenv-webpack");
-// const path = require("path");
+const Dotenv = require("dotenv-webpack");
+const path = require("path");
 const { DefinePlugin } = require("webpack");
 // const CopyPlugin = require("copy-webpack-plugin");
 
@@ -85,9 +85,9 @@ const prodConfig = {
       generateStatsFile: isStats,
     }),
     new ESLintPlugin({ failOnError: true }),
-    // new Dotenv({
-    //   path: path.resolve(__dirname, ".env.local"),
-    // }),
+    new Dotenv({
+      path: path.resolve(__dirname, ".env.local"),
+    }),
     // new CopyPlugin({
     //   patterns: [
     //     {
