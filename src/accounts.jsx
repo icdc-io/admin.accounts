@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Provider } from "react-redux";
 import { AccountsStore } from "./AppReducer";
 import PropTypes from "prop-types";
 import "./App.scss";
@@ -15,11 +14,7 @@ const Accounts = ({ store }) => {
     setIsLoaded(true);
   }, []);
 
-  return (
-    <Provider store={store}>
-      {isLoaded ? <AccountsInfo /> : <Loader active inline="centered" />}
-    </Provider>
-  );
+  return isLoaded ? <AccountsInfo /> : <Loader active inline="centered" />;
 };
 
 Accounts.propTypes = {

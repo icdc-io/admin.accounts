@@ -30,6 +30,7 @@ const stringifiedEnvVars = JSON.stringify(
 );
 
 const prodConfig = {
+  mode: "production",
   optimization: {
     minimize: true,
     minimizer: [
