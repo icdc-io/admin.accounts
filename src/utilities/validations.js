@@ -29,7 +29,7 @@ export const required = (value) =>
     ? undefined
     : validationMessages[localStorage.getItem("icdc-lang") || "en"].required;
 export const number = (value) =>
-  value && isNaN(Number(value))
+  value && Number.isNaN(Number(value))
     ? validationMessages[localStorage.getItem("icdc-lang") || "en"].number
     : undefined;
 export const positiveNumber = (value) =>

@@ -1,6 +1,6 @@
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { AccountsStore } from "./AppReducer";
-import PropTypes from "prop-types";
 import "./App.scss";
 import { Loader } from "semantic-ui-react";
 

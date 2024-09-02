@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import SelectAccounts from "./connectAccountModal";
-import DisconnectAccount from "./disconectAccountModal";
-import ConnectProcessModal from "./connectAccountProcess";
-import { Table, Loader, Button } from "semantic-ui-react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Loader, Table } from "semantic-ui-react";
+import SelectAccounts from "./connectAccountModal";
+import ConnectProcessModal from "./connectAccountProcess";
+import DisconnectAccount from "./disconectAccountModal";
 import "./locationAccount.scss";
+import { useTranslation } from "react-i18next";
 import {
   connectAccount,
   disconnectAccount,
@@ -15,7 +16,6 @@ import {
 } from "../AppActions";
 import CreateAccount from "./createAccount";
 import ErrorPage from "./errorPage";
-import { useTranslation } from "react-i18next";
 
 const LocationAccount = () => {
   const { t } = useTranslation();
@@ -168,7 +168,7 @@ const LocationAccount = () => {
                   <Table.HeaderCell>{t("techCont")}</Table.HeaderCell>
                   <Table.HeaderCell>{t("email")}</Table.HeaderCell>
                   <Table.HeaderCell>{t("phone")}</Table.HeaderCell>
-                  <Table.HeaderCell></Table.HeaderCell>
+                  <Table.HeaderCell />
                 </Table.Row>
               </Table.Header>
               {accountsData.length > 0 && (

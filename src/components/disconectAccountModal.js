@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Modal, Button, Divider, Input } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Button, Divider, Input, Modal } from "semantic-ui-react";
 import "./deleteAccount.scss";
 import DangerousHTML from "react-dangerous-html";
 import { useTranslation } from "react-i18next";
@@ -29,7 +29,7 @@ const Disconnect = ({
       onClose={closeModal}
     >
       <Modal.Content>
-        <div className="close-btn" onClick={closeModal}></div>
+        <div className="close-btn" onClick={closeModal} />
         <label className="title-deleteForm">{t("disconnectAccount")}</label>
         <div className="descr-deleteForm">
           <span>{t("disconnectAccountMess1")}</span>

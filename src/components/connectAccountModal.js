@@ -1,11 +1,11 @@
+import PropTypes from "prop-types";
 /* eslint-disable no-console */
 import React, { useCallback, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Modal, Button, Input, Table, Loader } from "semantic-ui-react";
+import { Button, Input, Loader, Modal, Table } from "semantic-ui-react";
 import "./selectAccount.scss";
 import _ from "lodash";
-import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const SelectAccounts = ({
   open,
@@ -131,7 +131,7 @@ const SelectAccounts = ({
             onClick={toggleCheckBox(el.id)}
           />
           <span>
-            <div className={el.isChecked ? "check-circle" : ""}></div>
+            <div className={el.isChecked ? "check-circle" : ""} />
           </span>
         </label>
       </Table.Cell>
@@ -145,7 +145,7 @@ const SelectAccounts = ({
   return (
     <Modal size="large" open={open}>
       <Modal.Content>
-        <div className="close-btn" onClick={cancelModal}></div>
+        <div className="close-btn" onClick={cancelModal} />
         <label className="title">{t("selectAccounts")}</label>
         <p className="description">{t("connectDescription")}</p>
         <Input
@@ -167,7 +167,7 @@ const SelectAccounts = ({
             <Table basic="very">
               <Table.Header className="connectAccount">
                 <Table.Row>
-                  <Table.HeaderCell></Table.HeaderCell>
+                  <Table.HeaderCell />
                   <Table.HeaderCell>{t("name")}</Table.HeaderCell>
                   <Table.HeaderCell>{t("id")}</Table.HeaderCell>
                   <Table.HeaderCell>{t("techCont")}</Table.HeaderCell>

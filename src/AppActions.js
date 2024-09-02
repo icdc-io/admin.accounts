@@ -1,6 +1,6 @@
-import * as ActionTypes from "./AppConstants";
-import { fetchData, createData, deleteData } from "container/Api";
+import { createData, deleteData, fetchData } from "container/Api";
 import { toast } from "sonner";
+import * as ActionTypes from "./AppConstants";
 
 const API_VERSION = "v1";
 

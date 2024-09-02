@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import { Loader, Modal } from "semantic-ui-react";
 import "./locationAccount.scss";
 import { useTranslation } from "react-i18next";

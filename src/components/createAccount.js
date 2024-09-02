@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from "react";
 import "./locationAccount.scss";
 import { PropTypes } from "prop-types";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
   Dropdown,
   Form,
   Header,
-  Radio,
   Loader,
+  Radio,
 } from "semantic-ui-react";
 import { createAccount, setupAccount } from "../AppActions";
-import { useDispatch, useSelector } from "react-redux";
-import ValidInput from "./validInput";
-import {
-  email,
-  idValidation,
-  minLength,
-  number,
-  phoneNumber,
-  required,
-  nameWithSpace,
-} from "../utilities/validations";
 import {
   countryOptions,
   initialState,
   quotasBody,
   taxIdOptions,
 } from "../constants/createAccountData";
-import { useTranslation } from "react-i18next";
+import {
+  email,
+  idValidation,
+  minLength,
+  nameWithSpace,
+  number,
+  phoneNumber,
+  required,
+} from "../utilities/validations";
+import ValidInput from "./validInput";
 
 const CreateAccount = ({ setCreateMode, updateGrid }) => {
   const { t } = useTranslation();

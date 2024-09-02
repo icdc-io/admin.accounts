@@ -1,7 +1,7 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { Icon, Segment, Header } from "semantic-ui-react";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { Header, Icon, Segment } from "semantic-ui-react";
 
 const ErrorPage = ({ auth }) => {
   const { t } = useTranslation();

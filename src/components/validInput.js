@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
 import { Icon, Input, Popup } from "semantic-ui-react";
 
 const ValidInput = ({
@@ -18,7 +18,7 @@ const ValidInput = ({
   const inputValue = isPassword ? initialValue?.substring(0, 8) : value;
   const check = (firstRender) => {
     for (let i = 0; i < validFunctions.length; i++) {
-      let isError = validFunctions[i](value);
+      const isError = validFunctions[i](value);
       if (isError) {
         setMessageError(firstRender ? "" : isError);
         result("");
@@ -44,7 +44,7 @@ const ValidInput = ({
     check(true);
   }, [value]);
 
-  let inputClass = [];
+  const inputClass = [];
   messageError && inputClass.push("invalid");
 
   return (
