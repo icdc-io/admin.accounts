@@ -29,15 +29,5 @@ module.exports = {
       strictVersion: true,
       requiredVersion: dependencies["react-i18next"],
     },
-    "semantic-ui-react": {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: dependencies["seamless-ui-react"],
-    },
-    "react-redux": {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: dependencies["react-redux"],
-    },
   },
 };
