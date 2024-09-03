@@ -10,7 +10,7 @@ module.exports = {
   },
   remotes: {
     container: isEnvProduction
-      ? "host@http://localhost:8000/general.js"
+      ? `host@${process.env.REACT_APP_GENERAL_HOST}/general.js`
       : "host@http://localhost:8000/general.js",
   },
   shared: {

@@ -1,5 +1,5 @@
-const API_GATEWAY = process.env.API_GATEWAY;
-const BASE_URL = `${API_GATEWAY}/api`;
+const REACT_APP_API_GATEWAY = process.env.REACT_APP_API_GATEWAY;
+const BASE_URL = `${REACT_APP_API_GATEWAY}/api`;
 
 export const accountConnectUrl = (locationName, accountName) =>
   `${BASE_URL}/accounts/v1/locations/${locationName}/accounts/${accountName}`;
