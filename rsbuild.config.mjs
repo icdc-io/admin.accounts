@@ -18,7 +18,7 @@ const stringifiedEnvVars = JSON.stringify(
 
 export default defineConfig({
   server: {
-    port: 3002,
+    port: 8022,
   },
   tools: {
     rspack: (config, { appendPlugins, rspack, isProd }) => {
