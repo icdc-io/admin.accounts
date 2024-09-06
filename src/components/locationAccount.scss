@@ -1,53 +1,51 @@
-.location-accounts {
-  .btn {
-    cursor: pointer;
-    border-radius: 2px;
-    color: white;
-    border: none;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-  }
+.btn {
+  cursor: pointer;
+  border-radius: 2px;
+  color: white;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+}
 
-  .btn:focus {
-    outline: none;
-  }
-  .ui.primary.button {
-    margin-left: 0.75rem;
-  }
+.btn:focus {
+  outline: none;
+}
+.ui.primary.button {
+  margin-left: 0.75rem;
+}
 
-  .btn-disconnect {
-    background: #b82525;
-    padding: 6px 10px;
-  }
+.btn-disconnect {
+  background: #b82525;
+  padding: 6px 10px;
+}
 
-  .btn-connect {
-    background: #2185d0;
-    padding: 8px 13px;
-  }
+.btn-connect {
+  background: #2185d0;
+  padding: 8px 13px;
+}
 
-  .accounts-wrapper {
-    padding: 26px 0 26px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+.accounts-wrapper {
+  padding: 26px 0 26px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  h2 {
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
-    color: #000000;
-  }
+h2 {
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+}
 
-  .firstColumnCell {
-    padding-left: 20px !important;
-  }
+.firstColumnCell {
+  padding-left: 20px !important;
+}
 
-  th {
-    color: #000000 !important;
-    font-weight: bold !important;
-  }
+th {
+  color: #000000 !important;
+  font-weight: bold !important;
 }
 
 .formDropdown {

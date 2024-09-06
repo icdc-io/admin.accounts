@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
-import { Button, Divider, Input, Modal } from "semantic-ui-react";
-import "./deleteAccount.scss";
 import DangerousHTML from "react-dangerous-html";
 import { useTranslation } from "react-i18next";
+import { Button, Divider, Input, Modal } from "semantic-ui-react";
 
 const Disconnect = ({
   open,

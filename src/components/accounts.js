@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Loader, Table } from "semantic-ui-react";
-import SelectAccounts from "./connectAccountModal";
-import ConnectProcessModal from "./connectAccountProcess";
-import DisconnectAccount from "./disconectAccountModal";
-import "./locationAccount.scss";
-import { useTranslation } from "react-i18next";
 import {
   connectAccount,
   disconnectAccount,
@@ -14,8 +10,12 @@ import {
   resetStatusAccount,
   setupAccount,
 } from "../AppActions";
+import SelectAccounts from "./connectAccountModal";
+import ConnectProcessModal from "./connectAccountProcess";
 import CreateAccount from "./createAccount";
+import DisconnectAccount from "./disconectAccountModal";
 import ErrorPage from "./errorPage";
+import "../App.scss";
 
 const LocationAccount = () => {
   const { t } = useTranslation();
@@ -191,7 +191,7 @@ const LocationAccount = () => {
     );
   };
 
-  return <div className="location-accounts">{checkStatus()}</div>;
+  return <div className="admin_accounts">{checkStatus()}</div>;
 };
 
 export default LocationAccount;

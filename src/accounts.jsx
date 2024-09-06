@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { AccountsStore } from "./AppReducer";
-import "./App.scss";
 import { Loader } from "semantic-ui-react";
+import { AccountsStore } from "./AppReducer";
 
 const AccountsInfo = React.lazy(() => import("./components/accounts"));
 

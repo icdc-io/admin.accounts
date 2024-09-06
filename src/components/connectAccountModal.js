@@ -1,11 +1,10 @@
+import _ from "lodash";
 import PropTypes from "prop-types";
 /* eslint-disable no-console */
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Input, Loader, Modal, Table } from "semantic-ui-react";
-import "./selectAccount.scss";
-import _ from "lodash";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { Button, Input, Loader, Modal, Table } from "semantic-ui-react";
 
 const SelectAccounts = ({
   open,

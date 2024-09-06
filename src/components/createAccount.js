@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "./locationAccount.scss";
 import { PropTypes } from "prop-types";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -145,7 +144,7 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
     form.billing.tax_id_type === "";
 
   return (
-    <section className="location-accounts">
+    <section>
       <Button
         labelPosition="left"
         icon="left chevron"
