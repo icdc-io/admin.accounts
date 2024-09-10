@@ -3,7 +3,7 @@ const { dependencies } = require("./package.json");
 const isEnvProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
-  name: "accounts",
+  name: "admin_accounts",
   filename: "remoteEntry.js",
   exposes: {
     "./accounts": "./src/accounts.jsx",
