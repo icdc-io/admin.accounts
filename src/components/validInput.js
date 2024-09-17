@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Icon, Input, Popup } from "semantic-ui-react";
+import { Icon, Input } from "semantic-ui-react";
+
+const Popup = React.lazy(() => import("container/Popup"));
 
 const ValidInput = ({
   label,
@@ -52,12 +54,11 @@ const ValidInput = ({
       <div className="popup-flex">
         <label htmlFor={name}>{label}</label>
         {popupContent && (
-          <Popup
-            trigger={<Icon name="question circle outline" />}
-            content={popupContent}
-            position="bottom left"
-            inverted
-          />
+          <Popup content={popupContent}>
+            <button type="button">
+              <Icon name="question circle outline" />
+            </button>
+          </Popup>
         )}
       </div>
       <Input
