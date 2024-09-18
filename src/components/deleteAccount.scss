@@ -1,44 +1,45 @@
 .ui.small.modal.wrapper-deleteForm {
   max-width: 640px;
   padding: 0px;
-}
-.title-deleteForm {
-  margin-bottom: 22px;
-  display: block;
-  font-weight: 600;
-  font-size: 24px;
-  color: #000000;
-}
-div.descr-deleteForm {
-  color: #787878;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 164.69%;
-}
-.ui.divider {
-  margin: 0;
-}
 
-.descr-deleteForm {
-  margin-bottom: 12px;
-
-  .nameAccount {
-    font-weight: bold;
+  .title-deleteForm {
+    margin-bottom: 22px;
+    display: block;
+    font-weight: 600;
+    font-size: 24px;
+    color: #000000;
   }
-}
-.warning {
-  background: #ffe4e4;
-  border: 1px solid #b95959;
-  box-sizing: border-box;
-  border-radius: 6px;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 164.69%;
-  color: #b95959;
-  padding: 12px;
-}
-
-.close-btn {
-  right: 20px;
+  div.descr-deleteForm {
+    color: #787878;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 164.69%;
+  }
+  .ui.divider {
+    margin: 0;
+  }
+  
+  .descr-deleteForm {
+    margin-bottom: 12px;
+  
+    .nameAccount {
+      font-weight: bold;
+    }
+  }
+  .warning {
+    background: #ffe4e4;
+    border: 1px solid #b95959;
+    box-sizing: border-box;
+    border-radius: 6px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 164.69%;
+    color: #b95959;
+    padding: 12px;
+  }
+  
+  .close-btn {
+    right: 20px;
+  }  
 }

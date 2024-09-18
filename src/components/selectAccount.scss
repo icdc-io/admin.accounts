@@ -1,92 +1,94 @@
-.title {
-  font-weight: 500;
-  font-size: 24px;
-  color: black;
-  display: block;
-}
-p.description {
-  font-size: 14px;
-  line-height: 20px;
-  font-style: normal;
-  font-weight: 500;
-  color: #767676;
-  margin: 0px;
-}
+.connect-account-modal {
+  .title {
+    font-weight: 500;
+    font-size: 24px;
+    color: black;
+    display: block;
+  }
+  p.description {
+    font-size: 14px;
+    line-height: 20px;
+    font-style: normal;
+    font-weight: 500;
+    color: #767676;
+    margin: 0px;
+  }
 
-input[type="checkbox"] {
-  display: none;
-}
+  input[type="checkbox"] {
+    display: none;
+  }
 
-input[type="checkbox"] + span {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #c4c4c4;
-  border-radius: 4px;
-  margin: 1rem 1rem 1rem 0;
-  cursor: pointer;
-}
+  input[type="checkbox"] + span {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #c4c4c4;
+    border-radius: 4px;
+    margin: 1rem 1rem 1rem 0;
+    cursor: pointer;
+  }
 
-input[type="checkbox"] + span .check-circle {
-  width: 8px;
-  height: 8px;
-  border-radius: 0.6rem;
-  background: #2185d0;
-}
+  input[type="checkbox"] + span .check-circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 0.6rem;
+    background: #2185d0;
+  }
 
-.btn-selectModal {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: baseline;
+  .btn-selectModal {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
 
-  p {
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 16px;
-    color: #000000;
-    margin-right: 20px;
+    p {
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 16px;
+      color: #000000;
+      margin-right: 20px;
 
-    span {
-      font-weight: bold;
-      margin-right: 5px;
+      span {
+        font-weight: bold;
+        margin-right: 5px;
+      }
     }
   }
-}
 
-.search {
-  margin: 20px 0;
-  width: 50%;
-}
-
-.container__table {
-  height: 290px;
-  overflow-y: auto;
-}
-.connectAccount {
-  th {
-    color: #000000 !important;
-    font-size: 16px;
-    font-weight: bold !important;
+  .search {
+    margin: 20px 0;
+    width: 50%;
   }
-}
 
-.connectElements {
-  td {
-    font-size: 16px;
+  .container__table {
+    height: 290px;
+    overflow-y: auto;
   }
-}
+  .connectAccount {
+    th {
+      color: #000000 !important;
+      font-size: 16px;
+      font-weight: bold !important;
+    }
+  }
 
-.table-wrapper {
-  margin: 30px 0;
-}
+  .connectElements {
+    td {
+      font-size: 16px;
+    }
+  }
 
-.ui.dimmer .ui.modal .ui.loader:before {
-  border-color: rgba(0, 0, 0, 0.1);
-}
+  .table-wrapper {
+    margin: 30px 0;
+  }
 
-.ui.dimmer .ui.modal .ui.loader:after {
-  border-color: #767676 transparent transparent;
+  .ui.dimmer .ui.modal .ui.loader:before {
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .ui.dimmer .ui.modal .ui.loader:after {
+    border-color: #767676 transparent transparent;
+  }
 }

@@ -142,7 +142,7 @@ const SelectAccounts = ({
     </Table.Row>
   ));
   return (
-    <Modal size="large" open={open}>
+    <Modal size="large" className="connect-account-modal" open={open}>
       <Modal.Content>
         <div className="close-btn" onClick={cancelModal} />
         <label className="title">{t("selectAccounts")}</label>
