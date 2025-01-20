@@ -1,7 +1,8 @@
+import Loader from "container/Loader";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Loader, Table } from "semantic-ui-react";
+import { Button, Table } from "semantic-ui-react";
 import {
   connectAccount,
   disconnectAccount,
@@ -113,7 +114,7 @@ const LocationAccount = () => {
     }
 
     if (accountsDataFetchStatus === "pending") {
-      return <Loader active inline="centered" />;
+      return <Loader />;
     }
 
     return createMode ? (

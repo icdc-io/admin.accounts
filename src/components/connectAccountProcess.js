@@ -1,7 +1,8 @@
+import Loader from "container/Loader";
 import PropTypes from "prop-types";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Loader, Modal } from "semantic-ui-react";
+import { Modal } from "semantic-ui-react";
 
 const ConnectProcessModal = ({ open }) => {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ const ConnectProcessModal = ({ open }) => {
       <Modal.Content>
         <label className="title-connectingAccounts">{t("connecting")}</label>
         <div className="descr-connectingAccounts">
-          <Loader size="medium" inline="centered" />
+          <Loader />
           <span>{t("connectingMessage")}</span>
         </div>
       </Modal.Content>

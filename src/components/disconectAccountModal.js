@@ -24,7 +24,7 @@ const Disconnect = ({
     <Modal
       size="small"
       open={open}
-      className="wrapper-deleteForm"
+      className="wrapper-deleteAccountForm"
       onClose={closeModal}
     >
       <Modal.Content>

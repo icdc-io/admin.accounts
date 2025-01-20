@@ -1,15 +1,9 @@
+import Loader from "container/Loader";
 import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Button,
-  Dropdown,
-  Form,
-  Header,
-  Loader,
-  Radio,
-} from "semantic-ui-react";
+import { Button, Dropdown, Form, Header, Radio } from "semantic-ui-react";
 import { createAccount, setupAccount } from "../AppActions";
 import {
   countryOptions,
@@ -683,9 +677,7 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
           }
         />
       </div>
-      {accountRegistrationStatus === "pending" && (
-        <Loader active inline="centered" className="charts" />
-      )}
+      {accountRegistrationStatus === "pending" && <Loader />}
     </section>
   );
 };

@@ -1,6 +1,6 @@
+import Loader from "container/Loader";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Loader } from "semantic-ui-react";
 import { AccountsStore } from "./AppReducer";
 
 const AccountsInfo = React.lazy(() => import("./components/accounts"));
@@ -13,7 +13,7 @@ const Accounts = ({ store }) => {
     setIsLoaded(true);
   }, []);
 
-  return isLoaded ? <AccountsInfo /> : <Loader active inline="centered" />;
+  return isLoaded ? <AccountsInfo /> : <Loader />;
 };
 
 Accounts.propTypes = {
