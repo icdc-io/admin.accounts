@@ -2,11 +2,11 @@ const REACT_APP_API_GATEWAY = process.env.REACT_APP_API_GATEWAY;
 const BASE_URL = `${REACT_APP_API_GATEWAY}/api`;
 
 export const accountConnectUrl = (locationName, accountName) =>
-  `${BASE_URL}/accounts/v1/locations/${locationName}/accounts/${accountName}`;
+	`${BASE_URL}/accounts/v1/locations/${locationName}/accounts/${accountName}`;
 export const accountsDataAvailableUrl = (locationName) =>
-  `${BASE_URL}/accounts/v1/locations/${locationName}/available_accounts`;
+	`${BASE_URL}/accounts/v1/locations/${locationName}/available_accounts`;
 export const accountsDataUrl = (locationName) =>
-  `${BASE_URL}/accounts/v1/locations/${locationName}/accounts`;
+	`${BASE_URL}/accounts/v1/locations/${locationName}/accounts`;
 export const setupAccountUrl = (accountName) => `/accounts/${accountName}`;
 export const ACCOUNTS_REGISTRATION_URL = `${BASE_URL}/accounts/v1/registration`;
 
@@ -19,12 +19,12 @@ export const ACCOUNTS_REGISTRATION = "ACCOUNTS_REGISTRATION";
 export const SETUP_ACCOUNT = "SETUP_ACCOUNT";
 
 export const notificationMessages = {
-  en: {
-    sucEditNotif: "Changes saved",
-    errNotif: "An error has occurred ",
-  },
-  ru: {
-    sucEditNotif: "Изменения сохранены",
-    errNotif: "Произошла ошибка ",
-  },
+	en: {
+		sucEditNotif: "Changes saved",
+		errNotif: "An error has occurred ",
+	},
+	ru: {
+		sucEditNotif: "Изменения сохранены",
+		errNotif: "Произошла ошибка ",
+	},
 };

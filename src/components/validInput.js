@@ -5,87 +5,88 @@ import { Icon, Input } from "semantic-ui-react";
 const Popup = React.lazy(() => import("container/Popup"));
 
 const ValidInput = ({
-  label,
-  name,
-  type = "text",
-  initialValue,
-  validFunctions,
-  result,
-  placeholder,
-  popupContent,
+	label,
+	name,
+	type = "text",
+	initialValue,
+	validFunctions,
+	result,
+	placeholder,
+	popupContent,
 }) => {
-  const [value, setValue] = useState(initialValue || "");
-  const [messageError, setMessageError] = useState("");
-  const isPassword = type === "password" && initialValue;
-  const inputValue = isPassword ? initialValue?.substring(0, 8) : value;
-  const check = (firstRender) => {
-    for (let i = 0; i < validFunctions.length; i++) {
-      const isError = validFunctions[i](value);
-      if (isError) {
-        setMessageError(firstRender ? "" : isError);
-        result("");
-        break;
-      }
+	const [value, setValue] = useState(initialValue || "");
+	const [messageError, setMessageError] = useState("");
+	const isPassword = type === "password" && initialValue;
+	const inputValue = isPassword ? initialValue?.substring(0, 8) : value;
+	const check = (firstRender) => {
+		for (let i = 0; i < validFunctions.length; i++) {
+			const isError = validFunctions[i](value);
+			if (isError) {
+				setMessageError(firstRender ? "" : isError);
+				result("");
+				break;
+			}
 
-      if (firstRender && !isError && i === validFunctions.length - 1) {
-        setMessageError("");
-        result(value);
-      }
-    }
-  };
+			if (firstRender && !isError && i === validFunctions.length - 1) {
+				setMessageError("");
+				result(value);
+			}
+		}
+	};
 
-  const blurCheck = () => {
-    check();
-  };
+	const blurCheck = () => {
+		check();
+	};
 
-  const onFocus = () => {
-    isPassword && setValue("");
-  };
+	const onFocus = () => {
+		isPassword && setValue("");
+	};
 
-  useEffect(() => {
-    check(true);
-  }, [value]);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		check(true);
+	}, [value]);
 
-  const inputClass = [];
-  messageError && inputClass.push("invalid");
+	const inputClass = [];
+	messageError && inputClass.push("invalid");
 
-  return (
-    <div className="general-input">
-      <div className="popup-flex">
-        <label htmlFor={name}>{label}</label>
-        {popupContent && (
-          <Popup content={popupContent}>
-            <button type="button">
-              <Icon name="question circle outline" />
-            </button>
-          </Popup>
-        )}
-      </div>
-      <Input
-        type={type}
-        name={name}
-        autoComplete="off"
-        onBlur={blurCheck}
-        onFocus={onFocus}
-        value={inputValue}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder={placeholder}
-        className={messageError ? "invalid" : ""}
-      />
-      {messageError && <div className="valid_label">{messageError}</div>}
-    </div>
-  );
+	return (
+		<div className="general-input">
+			<div className="popup-flex">
+				<label htmlFor={name}>{label}</label>
+				{popupContent && (
+					<Popup content={popupContent}>
+						<button type="button">
+							<Icon name="question circle outline" />
+						</button>
+					</Popup>
+				)}
+			</div>
+			<Input
+				type={type}
+				name={name}
+				autoComplete="off"
+				onBlur={blurCheck}
+				onFocus={onFocus}
+				value={inputValue}
+				onChange={(e) => setValue(e.target.value)}
+				placeholder={placeholder}
+				className={messageError ? "invalid" : ""}
+			/>
+			{messageError && <div className="valid_label">{messageError}</div>}
+		</div>
+	);
 };
 
 ValidInput.propTypes = {
-  label: PropTypes.string,
-  name: PropTypes.string,
-  type: PropTypes.string,
-  initialValue: PropTypes.any,
-  validFunctions: PropTypes.array,
-  result: PropTypes.func,
-  placeholder: PropTypes.any,
-  popupContent: PropTypes.node,
+	label: PropTypes.string,
+	name: PropTypes.string,
+	type: PropTypes.string,
+	initialValue: PropTypes.any,
+	validFunctions: PropTypes.array,
+	result: PropTypes.func,
+	placeholder: PropTypes.any,
+	popupContent: PropTypes.node,
 };
 
 export default ValidInput;

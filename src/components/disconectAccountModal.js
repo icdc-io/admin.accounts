@@ -5,86 +5,86 @@ import { useTranslation } from "react-i18next";
 import { Button, Divider, Input, Modal } from "semantic-ui-react";
 
 const Disconnect = ({
-  open,
-  onDisconnect,
-  onCancel,
-  accountData,
-  isDeletingInProgress,
+	open,
+	onDisconnect,
+	onCancel,
+	accountData,
+	isDeletingInProgress,
 }) => {
-  const { t } = useTranslation();
+	const { t } = useTranslation();
 
-  const [confirm, setConfirm] = useState("");
+	const [confirm, setConfirm] = useState("");
 
-  const closeModal = () => {
-    onCancel();
-    setConfirm("");
-  };
+	const closeModal = () => {
+		onCancel();
+		setConfirm("");
+	};
 
-  return (
-    <Modal
-      size="small"
-      open={open}
-      className="wrapper-deleteAccountForm"
-      onClose={closeModal}
-    >
-      <Modal.Content>
-        <div className="close-btn" onClick={closeModal} />
-        <label className="title-deleteForm">{t("disconnectAccount")}</label>
-        <div className="descr-deleteForm">
-          <span>{t("disconnectAccountMess1")}</span>
-          <span className="nameAccount">
-            {accountData?.displayName?.replace("&quot;", '"')}
-          </span>
-          <span>{t("disconnectAccountMess2")}</span>
-        </div>
-        <div className="warning">{t("disconnectAccountWarning")}</div>
-      </Modal.Content>
-      <Divider />
-      <Modal.Content style={{ paddingTop: "1rem" }}>
-        <div style={{ marginBottom: "1rem" }}>
-          {
-            <DangerousHTML
-              html={t("confirmModalDisconnect", {
-                service: `<b>${accountData?.displayName}</b>`,
-              })}
-            />
-          }
-        </div>
-        <Input
-          value={confirm}
-          onChange={(e) => setConfirm(e.currentTarget.value)}
-          style={{ width: "50%" }}
-        />
-      </Modal.Content>
-      <Modal.Actions align="right">
-        <Button
-          disabled={isDeletingInProgress}
-          content={t("cancel")}
-          onClick={closeModal}
-        />
-        <Button
-          negative
-          disabled={
-            isDeletingInProgress ||
-            confirm !== accountData?.displayName?.replace("&quot;", '"')
-          }
-          content={t("disconnect")}
-          onClick={() => {
-            onDisconnect();
-            closeModal();
-          }}
-        />
-      </Modal.Actions>
-    </Modal>
-  );
+	return (
+		<Modal
+			size="small"
+			open={open}
+			className="wrapper-deleteAccountForm"
+			onClose={closeModal}
+		>
+			<Modal.Content>
+				<button type="button" className="close-btn" onClick={closeModal} />
+				<label className="title-deleteForm">{t("disconnectAccount")}</label>
+				<div className="descr-deleteForm">
+					<span>{t("disconnectAccountMess1")}</span>
+					<span className="nameAccount">
+						{accountData?.displayName?.replace("&quot;", '"')}
+					</span>
+					<span>{t("disconnectAccountMess2")}</span>
+				</div>
+				<div className="warning">{t("disconnectAccountWarning")}</div>
+			</Modal.Content>
+			<Divider />
+			<Modal.Content style={{ paddingTop: "1rem" }}>
+				<div style={{ marginBottom: "1rem" }}>
+					{
+						<DangerousHTML
+							html={t("confirmModalDisconnect", {
+								service: `<b>${accountData?.displayName}</b>`,
+							})}
+						/>
+					}
+				</div>
+				<Input
+					value={confirm}
+					onChange={(e) => setConfirm(e.currentTarget.value)}
+					style={{ width: "50%" }}
+				/>
+			</Modal.Content>
+			<Modal.Actions align="right">
+				<Button
+					disabled={isDeletingInProgress}
+					content={t("cancel")}
+					onClick={closeModal}
+				/>
+				<Button
+					negative
+					disabled={
+						isDeletingInProgress ||
+						confirm !== accountData?.displayName?.replace("&quot;", '"')
+					}
+					content={t("disconnect")}
+					onClick={() => {
+						onDisconnect();
+						closeModal();
+					}}
+				/>
+			</Modal.Actions>
+		</Modal>
+	);
 };
 
 Disconnect.propTypes = {
-  open: PropTypes.bool,
-  isDeletingInProgress: PropTypes.bool,
-  onDisconnect: PropTypes.func,
-  onCancel: PropTypes.func,
-  accountData: PropTypes.object,
+	open: PropTypes.bool,
+	isDeletingInProgress: PropTypes.bool,
+	onDisconnect: PropTypes.func,
+	onCancel: PropTypes.func,
+	accountData: PropTypes.object,
 };
 
 export default Disconnect;

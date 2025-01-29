@@ -12,6 +12,17 @@
 /build
 /dist
 
+# IDE
+.vscode/**/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea
+
+# MF Types
+@mf-types
+
 # misc
 .DS_Store
 .env.local

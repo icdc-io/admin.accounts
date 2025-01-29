@@ -1,40 +1,40 @@
 {
-  "name": "icdc-admin-accounts",
-  "version": "1.0.0",
-  "author": "icdc",
-  "description": "Admin Accounts remote app",
-  "main": "accounts.jsx",
-  "repository": {
-    "type": "git",
-    "url": "https://code.icz.icdc.io/icdc/admin/accounts"
-  },
-  "scripts": {
-    "build": "rsbuild build",
-    "check": "biome check --write",
-    "dev": "rsbuild dev --open",
-    "format": "biome format --write",
-    "preview": "rsbuild preview"
-  },
-  "keywords": [],
-  "license": "ISC",
-  "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
-    "@module-federation/enhanced": "^0.6.0",
-    "@rsbuild/core": "1.0.1-rc.2",
-    "@rsbuild/plugin-react": "1.0.1-rc.2",
-    "@rsbuild/plugin-sass": "^1.0.1-rc.2",
-    "dotenv-webpack": "^8.1.0",
-    "lefthook": "^1.7.15",
-    "redux-logger": "^3.0.6"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dangerous-html": "^1.0.0",
-    "react-i18next": "^14.1.2",
-    "react-redux": "^9.1.0",
-    "react-router-dom": "^6.22.1",
-    "seamless-immutable": "^7.1.4",
-    "semantic-ui-react": "^2.1.5",
-    "sonner": "^1.4.0"
-  }
+	"name": "icdc-admin-accounts",
+	"version": "1.0.0",
+	"author": "icdc",
+	"description": "Admin Accounts remote app",
+	"main": "accounts.jsx",
+	"repository": {
+		"type": "git",
+		"url": "https://code.icz.icdc.io/icdc/admin/accounts"
+	},
+	"scripts": {
+		"build": "rsbuild build",
+		"check": "biome check --write",
+		"dev": "rsbuild dev --open",
+		"format": "biome format --write",
+		"preview": "rsbuild preview"
+	},
+	"keywords": [],
+	"license": "ISC",
+	"devDependencies": {
+		"@biomejs/biome": "^1.8.3",
+		"@module-federation/enhanced": "^0.6.0",
+		"@rsbuild/core": "1.0.1-rc.2",
+		"@rsbuild/plugin-react": "1.0.1-rc.2",
+		"@rsbuild/plugin-sass": "^1.0.1-rc.2",
+		"dotenv-webpack": "^8.1.0",
+		"lefthook": "^1.7.15",
+		"redux-logger": "^3.0.6"
+	},
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dangerous-html": "^1.0.0",
+		"react-i18next": "^14.1.2",
+		"react-redux": "^9.1.0",
+		"react-router-dom": "^6.22.1",
+		"seamless-immutable": "^7.1.4",
+		"semantic-ui-react": "^2.1.5",
+		"sonner": "^1.4.0"
+	}
 }
