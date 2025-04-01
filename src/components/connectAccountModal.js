@@ -1,9 +1,27 @@
-import _ from "lodash";
+import { Button } from "container/Button";
+import { Input } from "container/Input";
+import Loader from "container/Loader";
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "container/Modal";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow,
+} from "container/Table";
 import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { Button, Input, Loader, Modal, Table } from "semantic-ui-react";
+import "./selectAccount.scss";
 
 const SelectAccounts = ({
 	open,
@@ -27,10 +45,10 @@ const SelectAccounts = ({
 	useEffect(updateAvalibleGrid, []);
 
 	useEffect(() => {
-		const sortSelectAccountsList = _.sortBy(allAccounts, (o) => {
-			return o.displayName;
-		});
-		setAccounts([...sortSelectAccountsList]);
+		const sortSelectAccountsList = [...allAccounts].sort((a, b) =>
+			a.displayName?.toLowerCase().localeCompare(b.displayName?.toLowerCase()),
+		);
+		setAccounts(sortSelectAccountsList);
 	}, [allAccounts]);
 
 	useEffect(() => {
@@ -120,8 +138,8 @@ const SelectAccounts = ({
 	};
 
 	const selectAccountsList = accounts.map((el) => (
-		<Table.Row key={el.id} className="connectElements">
-			<Table.Cell style={{ paddingLeft: "0" }}>
+		<TableRow key={el.id} className="connectElements">
+			<TableCell style={{ paddingLeft: "0" }}>
 				<label>
 					<input
 						type="checkbox"
@@ -132,24 +150,27 @@ const SelectAccounts = ({
 						<div className={el.isChecked ? "check-circle" : ""} />
 					</span>
 				</label>
-			</Table.Cell>
-			<Table.Cell>{el.displayName}</Table.Cell>
-			<Table.Cell>{el.idIcdc}</Table.Cell>
-			<Table.Cell>{el.name}</Table.Cell>
-			<Table.Cell>{el.email}</Table.Cell>
-			<Table.Cell>{el.phone}</Table.Cell>
-		</Table.Row>
+			</TableCell>
+			<TableCell>{el.displayName}</TableCell>
+			<TableCell>{el.idIcdc}</TableCell>
+			<TableCell>{el.name}</TableCell>
+			<TableCell>{el.email}</TableCell>
+			<TableCell>{el.phone}</TableCell>
+		</TableRow>
 	));
 	return (
-		<Modal size="large" className="connect-account-modal" open={open}>
-			<Modal.Content>
-				<button type="button" className="close-btn" onClick={cancelModal} />
-				<label className="title">{t("selectAccounts")}</label>
+		<Dialog open={open} onOpenChange={cancelModal}>
+			<DialogContent
+				aria-describedby={undefined}
+				className="connect-account-modal"
+			>
+				<DialogHeader>
+					<DialogTitle>{t("selectAccounts")}</DialogTitle>
+				</DialogHeader>
+
 				<p className="description">{t("connectDescription")}</p>
 				<Input
-					className="search"
-					icon="search"
-					iconPosition="left"
+					variant="search"
 					placeholder={t("search")}
 					onChange={handleSearch}
 					disabled={allAccounts.length === 0}
@@ -163,39 +184,43 @@ const SelectAccounts = ({
 						/>
 					) : (
 						<Table basic="very">
-							<Table.Header className="connectAccount">
-								<Table.Row>
-									<Table.HeaderCell />
-									<Table.HeaderCell>{t("name")}</Table.HeaderCell>
-									<Table.HeaderCell>{t("id")}</Table.HeaderCell>
-									<Table.HeaderCell>{t("techCont")}</Table.HeaderCell>
-									<Table.HeaderCell>{t("email")}</Table.HeaderCell>
-									<Table.HeaderCell>{t("phone")}</Table.HeaderCell>
-								</Table.Row>
-							</Table.Header>
-							<Table.Body>{selectAccountsList}</Table.Body>
+							<TableHeader className="connectAccount">
+								<TableRow>
+									<TableHead />
+									<TableHead>{t("name")}</TableHead>
+									<TableHead>{t("id")}</TableHead>
+									<TableHead>{t("techCont")}</TableHead>
+									<TableHead>{t("email")}</TableHead>
+									<TableHead>{t("phone")}</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>{selectAccountsList}</TableBody>
 						</Table>
 					)}
 				</div>
-				<Modal.Actions className="btn-selectModal">
-					<p>
-						<span>{selectedAccounts.length}</span>
+				<DialogFooter className="items-center flex-wrap gap-y-2">
+					<p className="mr-2">
+						<b>{selectedAccounts.length}</b>&nbsp;
 						{t("selected")}
 					</p>
-					<Button
-						disabled={isConnectionInProgress}
-						content={t("cancel")}
-						onClick={cancelModal}
-					/>
+					<DialogClose asChild>
+						<Button
+							disabled={isConnectionInProgress}
+							variant="secondary"
+							onClick={cancelModal}
+						>
+							{t("cancel")}
+						</Button>
+					</DialogClose>
 					<Button
 						disabled={isConnectionInProgress || selectedAccounts.length === 0}
-						color="blue"
-						content={t("connectSelected")}
 						onClick={onConnectHandler}
-					/>
-				</Modal.Actions>
-			</Modal.Content>
-		</Modal>
+					>
+						{t("connectSelected")}
+					</Button>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
 	);
 };
 

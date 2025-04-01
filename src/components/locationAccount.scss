@@ -1,108 +1,252 @@
-.admin_accounts {
-  .btn {
-    cursor: pointer;
-    border-radius: 2px;
-    color: white;
-    border: none;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
+.location-accounts {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem;
+  background-color: white;
+
+  .status-indicator {
+    align-items: center;
+    border-radius: 44px;
+    cursor: default;
+    display: flex;
+    font-size: 16px;
+    height: 38px;
+    justify-content: center;
+    padding: 0 12px;
+    white-space: nowrap;
+    width: -webkit-min-content;
+    width: min-content;
   }
-  
-  .btn:focus {
-    outline: none;
+
+  .error-content {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .error-tip {
+      max-width: 500px;
+      h2 {
+        font-size: 46px;
+      }
+      p {
+        font-size: 22px;
+      }
+      // button.ui.primary.button {
+      //   margin-left: 0;
+      // }
+    }
   }
-  .ui.primary.button {
-    margin-left: 0.75rem;
+
+  .accounts-warn {
+    width: 100%;
+    border: 1px solid rgba(233, 193, 65, 1);
+    border-radius: 6px;
+    background-color: rgba(252, 249, 233, 1);
+    margin-top: 20px;
+    padding: 10px 21px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .accounts-warn-item {
+      display: flex;
+      align-items: center;
+      margin-left: 4px;
+    }
+    a {
+      text-decoration: underline;
+      margin-left: 4px;
+    }
   }
-  
-  .btn-disconnect {
-    background: #b82525;
-    padding: 6px 10px;
+  .accounts-header {
+    .accounts-header-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 14px;
+
+      h2 {
+        margin: 0;
+      }
+
+      .mark {
+        height: 30px;
+        width: 30px;
+        background-color: #2185d0;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 16px;
+        font-weight: 600;
+        margin-left: 10px;
+      }
+    }
+
+    p {
+      max-width: 1300px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      color: #767676;
+    }
   }
-  
-  .btn-connect {
-    background: #2185d0;
-    padding: 8px 13px;
-  }
-  
-  .accounts-wrapper {
-    padding: 26px 0 26px 18px;
+
+  .accounts-actions {
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    margin: 20px 0 14px 0;
+
+    section {
+      max-width: 680px;
+      display: flex;
+      align-items: center;
+
+      .dropdown {
+        padding: 4px 10px;
+        min-height: 32px;
+        display: flex;
+        align-items: center;
+
+        i {
+          top: 6px;
+        }
+
+        &:nth-child(2) {
+          margin: 6px;
+        }
+      }
+    }
   }
-  
-  h2 {
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
-    color: #000000;
+  .accounts-list-table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+
+    .accounts-list-table {
+      thead th {
+        border-left: none !important;
+        background-color: white;
+        padding: 8px 11px;
+        color: #676767 !important;
+
+        &:not(:first-child) {
+          cursor: default;
+
+          &:hover {
+            background-color: white;
+          }
+        }
+      }
+
+
+
+      .brokers-not-found {
+        height: 160px;
+
+        td {
+          position: relative;
+        }
+        .brokers-not-found-item {
+          position: absolute;
+          top: 35px;
+          left: 40%;
+          width: 200px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          p {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 21.6px;
+            text-align: left;
+          }
+        }
+      }
+
+      .accounts-not-found {
+        height: 160px;
+
+        td {
+          position: relative;
+        }
+        .accounts-not-found-item {
+          position: absolute;
+          top: 35px;
+          left: 40%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      .techContact {
+        display: flex;
+        .techContact-item {
+          padding: 0 14px;
+
+          &:nth-child(1) {
+            padding-left: 0;
+          }
+
+          &:nth-child(2) {
+            border-right: 1px solid rgba(209, 209, 209, 1);
+            border-left: 1px solid rgba(209, 209, 209, 1);
+          }
+
+          p {
+            margin: 0;
+            &:first-child {
+              font-size: 12px;
+              line-height: 14px;
+              color: rgba(103, 103, 103, 1);
+              font-weight: 600;
+            }
+            &:last-child {
+              font-size: 14px;
+              line-height: 16px;
+              color: black;
+            }
+          }
+        }
+      }
+    }
   }
-  
   .firstColumnCell {
     padding-left: 20px !important;
   }
-  
+
+  .disconnect-col {
+    width: 120px;
+  }
+
   th {
     color: #000000 !important;
     font-weight: bold !important;
   }
-  
-  .formDropdown {
-    display: flex;
-    flex-direction: column;
+}
+.connectingAccounts {
+  max-width: 570px;
+}
+
+.title-connectingAccounts {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 29px;
+  line-height: 34px;
+}
+
+.descr-connectingAccounts {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  flex-direction: column;
+
+  span {
+    margin-left: 5px;
   }
-  
-  .formActions {
-    margin: 20px 0px;
-    float: right;
-  }
-  
-  .createAccountForm {
-    .general-input {
-      display: flex;
-      flex-direction: column;
-    }
-  
-    label {
-      color: rgba(0, 0, 0, 0.87);
-      font-size: 0.9em;
-      font-weight: 700;
-      margin: 16px 0px 8px 0px;
-    }
-  }
-  
-  .taxExempt div {
-    display: flex;
-  }
-  
-  h3.ui.header {
-    margin-bottom: 0px;
-  }
-  
-  .connectingAccounts {
-    max-width: 570px;
-  }
-  
-  .title-connectingAccounts {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 29px;
-    line-height: 34px;
-  }
-  
-  .descr-connectingAccounts {
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-  }
-  .popup-flex {
-    display: flex;
-    align-items: center;
-  
-    i {
-      margin: 4px 0 0 2px;
-    }
-  }  
 }

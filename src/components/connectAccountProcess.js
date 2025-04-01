@@ -1,22 +1,38 @@
 import Loader from "container/Loader";
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogTitle,
+} from "container/Modal";
 import PropTypes from "prop-types";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Modal } from "semantic-ui-react";
 
 const ConnectProcessModal = ({ open }) => {
 	const { t } = useTranslation();
 
 	return (
-		<Modal size="small" open={open} className="connectingAccounts">
-			<Modal.Content>
-				<label className="title-connectingAccounts">{t("connecting")}</label>
+		<Dialog
+			open={open}
+			// onOpenChange={(isOpen: boolean) => {
+			//   setOpen(isOpen);
+			// }}
+		>
+			<DialogContent
+				aria-describedby={undefined}
+				className="connectingAccounts"
+			>
+				<DialogHeader>
+					<DialogTitle>{t("connecting")}</DialogTitle>
+				</DialogHeader>
 				<div className="descr-connectingAccounts">
 					<Loader />
+					<br />
 					<span>{t("connectingMessage")}</span>
 				</div>
-			</Modal.Content>
-		</Modal>
+			</DialogContent>
+		</Dialog>
 	);
 };
 

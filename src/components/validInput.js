@@ -1,8 +1,8 @@
+import { Input } from "container/Input";
+import Popup from "container/Popup";
+import { CircleHelp } from "lucide-react";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Icon, Input } from "semantic-ui-react";
-
-const Popup = React.lazy(() => import("container/Popup"));
 
 const ValidInput = ({
 	label,
@@ -52,16 +52,16 @@ const ValidInput = ({
 
 	return (
 		<div className="general-input">
-			<div className="popup-flex">
-				<label htmlFor={name}>{label}</label>
+			<label htmlFor={name}>
+				{label}&nbsp;
 				{popupContent && (
 					<Popup content={popupContent}>
 						<button type="button">
-							<Icon name="question circle outline" />
+							<CircleHelp size={16} />
 						</button>
 					</Popup>
 				)}
-			</div>
+			</label>
 			<Input
 				type={type}
 				name={name}
@@ -73,7 +73,11 @@ const ValidInput = ({
 				placeholder={placeholder}
 				className={messageError ? "invalid" : ""}
 			/>
-			{messageError && <div className="valid_label">{messageError}</div>}
+			{messageError && (
+				<p className="text-[0.8rem] font-medium text-destructive mt-2">
+					{messageError}
+				</p>
+			)}
 		</div>
 	);
 };

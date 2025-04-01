@@ -8,10 +8,13 @@ const initialState = Immutable({
 	allAccountsFetchStatus: "",
 	accountsData: [],
 	accountsDataFetchStatus: "pending",
+	accountsDataFetchError: "",
 	connectStatus: "",
 	disconnectStatus: "",
 	accountRegistrationStatus: "",
 	setupStatus: "",
+	setupApiVersion: "",
+	missedAccounts: [],
 });
 
 // biome-ignore lint/style/useDefaultParameterLast: <explanation>
@@ -36,6 +39,11 @@ export const AccountsStore = (state = initialState, action) => {
 			});
 		case `${ActionTypes.ACCOUNTS_DATA_FETCH}_REJECTED`:
 			return state.set("accountsDataFetchStatus", "rejected");
+		case `${ActionTypes.ACCOUNTS_DATA_FETCH}_REJECTED_403`:
+			return Immutable.merge(state, {
+				accountsDataFetchStatus: "403",
+				accountsDataFetchError: action.payload,
+			});
 
 		case `${ActionTypes.ACCOUNTS_CONNECT}_PENDING`:
 			return state.set("connectStatus", "pending");
@@ -70,6 +78,37 @@ export const AccountsStore = (state = initialState, action) => {
 			return state.set("setupStatus", "fulfilled");
 		case `${ActionTypes.SETUP_ACCOUNT}_REJECTED`:
 			return state.set("setupStatus", "rejected");
+
+		case ActionTypes.SETUP_STATUS_RESET:
+			return state.set("setupStatus", "");
+
+		case ActionTypes.SET_SETUP_API_VERSION:
+			return state.set("setupApiVersion", action.version);
+
+		case ActionTypes.SET_TO_STATE__FLOW_STATUS:
+			return Immutable.merge(state, {
+				accountsData: state.accountsData.map((account) =>
+					account.id === action.account
+						? {
+								...account,
+								flow_status: action.flow_status,
+								status: action.flow_status.status,
+							}
+						: account,
+				),
+			});
+
+		case ActionTypes.ACCOUNTS_WITHOUT_INFRASTRUCTURE:
+			return Immutable.merge(state, {
+				missedAccounts: action.payload,
+			});
+
+		case ActionTypes.ACCOUNT_REMOVE_FROM_STATE:
+			return Immutable.merge(state, {
+				accountsData: state.accountsData.filter(
+					(account) => account.id !== action.account,
+				),
+			});
 
 		default:
 			return state;

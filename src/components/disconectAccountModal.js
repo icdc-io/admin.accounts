@@ -1,8 +1,18 @@
+import { Button } from "container/Button";
+import { Input } from "container/Input";
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "container/Modal";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 import DangerousHTML from "react-dangerous-html";
 import { useTranslation } from "react-i18next";
-import { Button, Divider, Input, Modal } from "semantic-ui-react";
+import "./deleteAccount.scss";
 
 const Disconnect = ({
 	open,
@@ -21,15 +31,14 @@ const Disconnect = ({
 	};
 
 	return (
-		<Modal
-			size="small"
-			open={open}
-			className="wrapper-deleteAccountForm"
-			onClose={closeModal}
-		>
-			<Modal.Content>
-				<button type="button" className="close-btn" onClick={closeModal} />
-				<label className="title-deleteForm">{t("disconnectAccount")}</label>
+		<Dialog open={open} onOpenChange={closeModal}>
+			<DialogContent
+				aria-describedby={undefined}
+				className="wrapper-deleteAccountForm"
+			>
+				<DialogHeader>
+					<DialogTitle>{t("disconnectAccount")}</DialogTitle>
+				</DialogHeader>
 				<div className="descr-deleteForm">
 					<span>{t("disconnectAccountMess1")}</span>
 					<span className="nameAccount">
@@ -38,44 +47,39 @@ const Disconnect = ({
 					<span>{t("disconnectAccountMess2")}</span>
 				</div>
 				<div className="warning">{t("disconnectAccountWarning")}</div>
-			</Modal.Content>
-			<Divider />
-			<Modal.Content style={{ paddingTop: "1rem" }}>
-				<div style={{ marginBottom: "1rem" }}>
-					{
-						<DangerousHTML
-							html={t("confirmModalDisconnect", {
-								service: `<b>${accountData?.displayName}</b>`,
-							})}
-						/>
-					}
-				</div>
-				<Input
-					value={confirm}
-					onChange={(e) => setConfirm(e.currentTarget.value)}
-					style={{ width: "50%" }}
+				<hr />
+				<DangerousHTML
+					html={t("confirmModalDisconnect", {
+						service: `<b>${accountData?.displayName}</b>`,
+					})}
 				/>
-			</Modal.Content>
-			<Modal.Actions align="right">
-				<Button
-					disabled={isDeletingInProgress}
-					content={t("cancel")}
-					onClick={closeModal}
-				/>
-				<Button
-					negative
-					disabled={
-						isDeletingInProgress ||
-						confirm !== accountData?.displayName?.replace("&quot;", '"')
-					}
-					content={t("disconnect")}
-					onClick={() => {
-						onDisconnect();
-						closeModal();
-					}}
-				/>
-			</Modal.Actions>
-		</Modal>
+				<Input value={confirm} onChange={(e) => setConfirm(e.target.value)} />
+				<DialogFooter>
+					<DialogClose asChild>
+						<Button
+							disabled={isDeletingInProgress}
+							variant="secondary"
+							onClick={closeModal}
+						>
+							{t("cancel")}
+						</Button>
+					</DialogClose>
+					<Button
+						variant="warning"
+						disabled={
+							isDeletingInProgress ||
+							confirm !== accountData?.displayName?.replace("&quot;", '"')
+						}
+						onClick={() => {
+							onDisconnect();
+							closeModal();
+						}}
+					>
+						{t("disconnect")}
+					</Button>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
 	);
 };
 

@@ -29,10 +29,5 @@ module.exports = {
 			strictVersion: true,
 			requiredVersion: dependencies["react-i18next"],
 		},
-		sonner: {
-			singleton: true,
-			strictVersion: true,
-			requiredVersion: dependencies.sonner,
-		},
 	},
 };

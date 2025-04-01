@@ -1,10 +1,26 @@
-import Loader from "container/Loader";
-import { PropTypes } from "prop-types";
 import React, { useEffect, useState } from "react";
+import "./createAccount.scss";
+import { Button } from "container/Button";
+import { Label } from "container/Label";
+import Loader from "container/Loader";
+import { RadioGroup, RadioGroupItem } from "container/Radio";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "container/Select";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Dropdown, Form, Header, Radio } from "semantic-ui-react";
-import { createAccount, setupAccount } from "../AppActions";
+import { Link, useNavigate } from "react-router-dom";
+import {
+	createAccount,
+	fetchAccountsData,
+	resetSetupStatus,
+	resetStatusAccount,
+	setupAccount,
+} from "../AppActions";
 import {
 	countryOptions,
 	initialState,
@@ -20,18 +36,37 @@ import {
 	phoneNumber,
 	required,
 } from "../utilities/validations";
+import AddInfo from "./addInfo";
+import ConnectProcessModal from "./connectAccountProcess";
 import ValidInput from "./validInput";
 
-const CreateAccount = ({ setCreateMode, updateGrid }) => {
-	const { t } = useTranslation();
+const accountOwnerAddInfo = [
+	"accountOwnerInfo1",
+	"accountOwnerInfo2",
+	"accountOwnerInfo3",
+	"accountOwnerInfo4",
+	"accountOwnerInfo5",
+	"accountOwnerInfo6",
+];
+const billingContactAddInfo = ["billingContactInfo1"];
 
+const CreateAccount = () => {
+	const { t } = useTranslation();
+	const user = useSelector((state) => state.host.user);
 	const accountRegistrationStatus = useSelector(
 		(state) => state.AccountsStore.accountRegistrationStatus,
 	);
-	const user = useSelector((state) => state.host.user);
-	const dispatch = useDispatch();
+	const setupStatus = useSelector((state) => state.AccountsStore.setupStatus);
+	const setupApiVersion = useSelector(
+		(state) => state.AccountsStore.setupApiVersion,
+	);
+	const location = useSelector((state) => state.host.user.location);
 
-	/* eslint camelcase: 0 */
+	const isOldSetupApiVersion = setupApiVersion === "old";
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
 	const businessTypeOptions = [
 		{ text: t("naturalPerson"), value: "Natural Person" },
 		{ text: t("legalEntity"), value: "Legal Entity" },
@@ -42,46 +77,47 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 	const [businessType, setBusinessType] = useState(
 		businessTypeOptions[0].value,
 	);
-	const [taxExempt, setTaxExempt] = useState(false);
 	const isLegalEntity = businessType === "Legal Entity";
 
 	useEffect(() => {
-		setForm((prevState) => ({
-			...prevState,
-			billing: {
-				...prevState.billing,
-				tax_exempt: !taxExempt ? "none" : "yes",
-			},
-		}));
-	}, [taxExempt]);
+		!setupApiVersion && dispatch(fetchAccountsData(location));
+	}, [setupApiVersion]);
 
 	useEffect(() => {
 		isLegalEntity
-			? setForm((prevState) => ({
-					...prevState,
+			? setForm({
+					...form,
 					billing: {
-						...prevState.billing,
+						...form.billing,
 						tax_id_type: taxIdOptions[0].value,
 						tax_exempt: "none",
 					},
-				}))
-			: setForm((prevState) => ({
-					...prevState,
-					billing: { ...prevState.billing, tax_id_type: "", tax_exempt: "" },
-				}));
-	}, [isLegalEntity]);
+				})
+			: setForm({
+					...form,
+					billing: { ...form.billing, tax_id_type: "", tax_exempt: "" },
+				});
+	}, [businessType]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		(accountRegistrationStatus === "rejected" ||
-			accountRegistrationStatus === "fulfilled") &&
-			setCreateMode(false);
 		if (accountRegistrationStatus === "fulfilled") {
-			updateGrid();
 			dispatch(setupAccount(quotas));
-			setForm(initialState);
 		}
 	}, [accountRegistrationStatus]);
+
+	useEffect(() => {
+		if (setupStatus === "fulfilled") {
+			navigate("..");
+		}
+	}, [setupStatus]);
+
+	useEffect(
+		() => () => {
+			dispatch(resetStatusAccount());
+			dispatch(resetSetupStatus());
+		},
+		[],
+	);
 
 	const createNewAccount = () => {
 		const body = isLegalEntity
@@ -112,10 +148,12 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 					payment_methods: [],
 					locations: [...form.locations, user.location],
 				};
+
 		dispatch(createAccount(body));
 	};
 
 	const disabled =
+		accountRegistrationStatus === "pending" ||
 		form.general.display_name === "" ||
 		form.name === "" ||
 		form.general.contact.email === "" ||
@@ -126,10 +164,10 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 		form.billing.address.street === "" ||
 		form.billing.address.city === "" ||
 		form.billing.address.state === "" ||
-		form.billing.address.postal_code === "" ||
-		accountRegistrationStatus === "pending";
+		form.billing.address.postal_code === "";
 
 	const disabledForLegal =
+		accountRegistrationStatus === "pending" ||
 		form.billing.name === "" ||
 		form.billing.phone === "" ||
 		form.billing.email === "" ||
@@ -143,18 +181,14 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 		form.billing.tax_id_type === "";
 
 	return (
-		<section>
-			<Button
-				labelPosition="left"
-				icon="left chevron"
-				content={t("back")}
-				onClick={() => setCreateMode(false)}
-			/>
-			<div className="accounts-wrapper" style={{ paddingLeft: "0px" }}>
-				<h2>{t("creatingAccount")}</h2>
-			</div>
-			<Form className="createAccountForm" style={{ width: "340px" }}>
-				<Header as="h3">{t("infoAccount")}</Header>
+		<div className="create-account-wrapper">
+			<Link to={".."}>
+				<Button variant="back">{t("back")}</Button>
+			</Link>
+
+			<h2>{t("creatingAccount")}</h2>
+			<form className="createAccountForm">
+				<h3>{t("infoAccount")}</h3>
 				<ValidInput
 					label={t("display_name")}
 					name="displayName"
@@ -195,7 +229,10 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 						setQuotas([...quotas].map((el) => ({ ...el, accountName: value })));
 					}}
 				/>
-				<Header as="h3">{t("accountAdmin")}</Header>
+				<br />
+				<h3>{t("accountOwner")}</h3>
+				<br />
+				<AddInfo t={t} items={accountOwnerAddInfo} />
 				<ValidInput
 					label={t("firstName")}
 					name="firstName"
@@ -278,17 +315,25 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 						})
 					}
 				/>
-
-				<Header as="h3">{t("businessInfo")}</Header>
+				<br />
+				<h3>{t("businessInfo")}</h3>
 				<div className="general-input">
-					<label>{t("typeOfBusiness")}</label>
-					<Dropdown
-						selection
-						options={businessTypeOptions}
-						style={{ width: "100%" }}
-						onChange={(param, data) => setBusinessType(data.value)}
-						defaultValue={businessTypeOptions[0].value}
-					/>
+					<Label>{t("typeOfBusiness")}</Label>
+					<Select
+						value={businessType}
+						onValueChange={(value) => setBusinessType(value)}
+					>
+						<SelectTrigger>
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							{businessTypeOptions.map((item) => (
+								<SelectItem key={item.value} value={item.value}>
+									{item.text}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
 				</div>
 				{!isLegalEntity && (
 					<ValidInput
@@ -299,7 +344,10 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 						initialValue={form.billing.name}
 						validFunctions={[required, nameWithSpace]}
 						result={(value) =>
-							setForm({ ...form, billing: { ...form.billing, name: value } })
+							setForm({
+								...form,
+								billing: { ...form.billing, name: value },
+							})
 						}
 					/>
 				)}
@@ -312,7 +360,10 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 							initialValue={form.billing.name}
 							validFunctions={[required]}
 							result={(value) =>
-								setForm({ ...form, billing: { ...form.billing, name: value } })
+								setForm({
+									...form,
+									billing: { ...form.billing, name: value },
+								})
 							}
 						/>
 						<ValidInput
@@ -345,10 +396,8 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 						/>
 					</div>
 				)}
-
-				<Header as="h3">
-					{isLegalEntity ? t("address") : t("residenceAddress")}
-				</Header>
+				<br />
+				<h3>{isLegalEntity ? t("address") : t("residenceAddress")}</h3>
 				<ValidInput
 					label={t("address")}
 					name="address"
@@ -367,22 +416,30 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 				/>
 
 				<div className="general-input">
-					<label>{t("country")}</label>
-					<Dropdown
-						selection
-						options={countryOptions}
+					<Label>{t("country")}</Label>
+					<Select
 						defaultValue={countryOptions[0].value}
-						style={{ width: "100%" }}
-						onChange={(param, data) =>
+						onValueChange={(value) =>
 							setForm({
 								...form,
 								billing: {
 									...form.billing,
-									address: { ...form.billing.address, country: data.value },
+									address: { ...form.billing.address, country: value },
 								},
 							})
 						}
-					/>
+					>
+						<SelectTrigger>
+							<SelectValue />
+						</SelectTrigger>
+						<SelectContent>
+							{countryOptions.map((item) => (
+								<SelectItem key={item.value} value={item.value}>
+									{item.text}
+								</SelectItem>
+							))}
+						</SelectContent>
+					</Select>
 				</div>
 
 				<ValidInput
@@ -433,12 +490,10 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 						})
 					}
 				/>
-
 				{isLegalEntity && (
 					<div>
-						<Header as="h3" style={{ marginTop: "20px" }}>
-							{t("billingInfo")}
-						</Header>
+						<br />
+						<h3>{t("billingInfo")}</h3>
 						<ValidInput
 							label={t("taxId")}
 							name="taxId"
@@ -453,45 +508,55 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 							}
 						/>
 						<div className="general-input taxExempt">
-							<label>{t("taxExempt")}</label>
-							<div>
-								<Radio
-									label={t("noTaxExempt")}
-									name="no"
-									value="none"
-									checked={taxExempt === false}
-									onChange={() => {
-										setTaxExempt(!taxExempt);
-									}}
-								/>
-								<Radio
-									label={t("yesTaxExempt")}
-									name="yes"
-									value="yes"
-									checked={taxExempt === true}
-									onChange={() => {
-										setTaxExempt(!taxExempt);
-									}}
-									style={{ margin: "0px 10px" }}
-								/>
-							</div>
+							<Label>{t("taxExempt")}</Label>
+							<RadioGroup
+								onValueChange={(value) =>
+									setForm((prevState) => ({
+										...prevState,
+										billing: {
+											...prevState.billing,
+											tax_exempt: value,
+										},
+									}))
+								}
+								value={form.billing.tax_exempt}
+								className="flex radio-group"
+							>
+								<div className="flex flex-row items-center space-x-3 space-y-0">
+									<RadioGroupItem value={"none"} />
+									<Label className="font-normal">{t("noTaxExempt")}</Label>
+								</div>
+								<div className="flex flex-row items-center space-x-3 space-y-0">
+									<RadioGroupItem value={"yes"} />
+									<Label className="font-normal">{t("yesTaxExempt")}</Label>
+								</div>
+							</RadioGroup>
 						</div>
 						<div className="general-input">
-							<label>{t("taxIdtype")}</label>
-							<Dropdown
-								selection
-								options={taxIdOptions}
+							<Label>{t("taxIdtype")}</Label>
+							<Select
 								defaultValue={taxIdOptions[0].value}
-								style={{ width: "100%" }}
-								onChange={(param, data) =>
+								onValueChange={(value) =>
 									setForm({
 										...form,
-										billing: { ...form.billing, tax_id_type: data.value },
+										billing: { ...form.billing, tax_id_type: value },
 									})
 								}
-							/>
+							>
+								<SelectTrigger>
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									{taxIdOptions.map((item) => (
+										<SelectItem key={item.value} value={item.value}>
+											{item.text}
+										</SelectItem>
+									))}
+								</SelectContent>
+							</Select>
 						</div>
-						<Header as="h3">{t("paymentMethod")}</Header>
+						<br />
+						<h3>{t("paymentMethod")}</h3>
 						<ValidInput
 							label={t("bankName")}
 							name="bankName"
@@ -556,7 +621,10 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 										index === 0
 											? {
 													...el,
-													bank_transfer: { ...el.bank_transfer, iban: value },
+													bank_transfer: {
+														...el.bank_transfer,
+														iban: value,
+													},
 												}
 											: el,
 									),
@@ -576,14 +644,24 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 										index === 0
 											? {
 													...el,
-													bank_transfer: { ...el.bank_transfer, bic: value },
+													bank_transfer: {
+														...el.bank_transfer,
+														bic: value,
+													},
 												}
 											: el,
 									),
 								})
 							}
 						/>
-						<Header as="h3">{t("billingContact")}</Header>
+					</div>
+				)}
+				{isLegalEntity && (
+					<>
+						<br />
+						<h3>{t("billingContact")}</h3>
+						<br />
+						<AddInfo t={t} items={billingContactAddInfo} />
 						<ValidInput
 							label={t("firstName")}
 							name="firstName"
@@ -664,32 +742,39 @@ const CreateAccount = ({ setCreateMode, updateGrid }) => {
 								})
 							}
 						/>
-					</div>
+					</>
 				)}
-			</Form>
+			</form>
 
-			<div className="formActions">
-				<Button content={t("cancel")} onClick={() => setCreateMode(false)} />
+			<div className="formActions flex flex-wrap gap-2">
+				<Link to="..">
+					<Button type="button" variant="secondary">
+						{t("cancel")}
+					</Button>
+				</Link>
 				<Button
 					onClick={createNewAccount}
-					primary
 					type="submit"
-					content={t("create")}
 					disabled={
 						businessType === "Legal Entity"
 							? disabled || disabledForLegal
 							: disabled
 					}
-				/>
+				>
+					{t("create")}
+				</Button>
 			</div>
-			{accountRegistrationStatus === "pending" && <Loader />}
-		</section>
+			{!isOldSetupApiVersion &&
+				(accountRegistrationStatus === "pending" ||
+					setupStatus === "pending") && <Loader />}
+			{isOldSetupApiVersion && accountRegistrationStatus === "pending" && (
+				<Loader />
+			)}
+			{isOldSetupApiVersion && (
+				<ConnectProcessModal open={setupStatus === "pending"} />
+			)}
+		</div>
 	);
-};
-
-CreateAccount.propTypes = {
-	setCreateMode: PropTypes.func,
-	updateGrid: PropTypes.func,
 };
 
 export default CreateAccount;
