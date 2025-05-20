@@ -54,6 +54,7 @@ const StatusIndicator = ({ item }) => {
 	const popupContent = (
 		<>
 			{servicesStatuses.map((serviceStatus, i) => (
+				// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 				<div key={i}>
 					<p>{t(serviceStatus)}</p>
 					<ul>
@@ -68,6 +69,7 @@ const StatusIndicator = ({ item }) => {
 								</li>
 							) : (
 								item.flow_status[serviceStatus].map((serviceList, i) => (
+									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									<li key={i}>
 										{capitalizeFirstLetter(
 											serviceList.service.replace("_", " "),
