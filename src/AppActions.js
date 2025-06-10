@@ -275,10 +275,9 @@ export const setupAccount = (payload) => (dispatch) => {
 
 const createAccountAction = (payload) => ({
 	type: ActionTypes.ACCOUNTS_REGISTRATION,
-	payload: createData(
-		`/api/accounts/v1/${ActionTypes.ACCOUNTS_REGISTRATION_URL}`,
-		payload,
-	),
+	payload: createData(ActionTypes.ACCOUNTS_REGISTRATION_URL, payload, {
+		"x-icdc-location": "%LOCATION",
+	}),
 });
 
 export const createAccount = (payload) => (dispatch) => {

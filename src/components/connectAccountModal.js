@@ -139,7 +139,7 @@ const SelectAccounts = ({
 
 	const selectAccountsList = accounts.map((el) => (
 		<TableRow key={el.id} className="connectElements">
-			<TableCell style={{ paddingLeft: "0" }}>
+			<TableCell>
 				<label>
 					<input
 						type="checkbox"
