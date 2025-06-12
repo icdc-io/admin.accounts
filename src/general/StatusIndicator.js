@@ -94,7 +94,9 @@ const StatusIndicator = ({ item }) => {
 		item.status === accountStatuses.deleting ||
 		item.status === accountStatuses.deleted ||
 		item.status === accountStatuses.ready ? (
-		<Popup content={popupContent}>{statusComponent}</Popup>
+		<Popup content={popupContent} className="status_popup">
+			{statusComponent}
+		</Popup>
 	) : (
 		statusComponent
 	);

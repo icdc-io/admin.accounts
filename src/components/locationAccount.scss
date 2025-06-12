@@ -250,3 +250,21 @@
     margin-left: 5px;
   }
 }
+
+.status_popup {
+	font-size: 0.875rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	padding: 0.8rem;
+	line-height: 1.2;
+
+	p {
+		font-weight: 700;
+	}
+
+	ul {
+		list-style: unset;
+		padding-left: 1rem;
+	}
+}
