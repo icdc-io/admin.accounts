@@ -90,6 +90,7 @@ const StatusIndicator = ({ item }) => {
 	);
 
 	return item.status === accountStatuses.creating ||
+		item.status === accountStatuses.pending ||
 		item.status === accountStatuses.failed ||
 		item.status === accountStatuses.deleting ||
 		item.status === accountStatuses.deleted ||

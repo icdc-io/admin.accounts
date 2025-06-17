@@ -150,7 +150,8 @@ const LocationAccount = () => {
 					const accountsInProgress = accountsData.filter(
 						(account) =>
 							account.status === accountStatuses.creating ||
-							account.status === accountStatuses.deleting,
+							account.status === accountStatuses.deleting ||
+							account.status === accountStatuses.pending,
 					);
 
 					if (accountsInProgress.length > 0) {
@@ -216,7 +217,8 @@ const LocationAccount = () => {
 			accountsData?.some(
 				(account) =>
 					account.status === accountStatuses.creating ||
-					account.status === accountStatuses.deleting,
+					account.status === accountStatuses.deleting ||
+					accountStatuses.pending,
 			)
 		) {
 			startAccountStatusCheck();
