@@ -1,71 +1,71 @@
 .create-account-wrapper {
-  padding: 2rem;
-  background-color: white;
+	padding: 2rem;
+	background-color: white;
 
-  h2 {
-    margin: 26px 0 26px 0px;
-  }
+	h2 {
+		margin: 26px 0 26px 0px;
+	}
 
-  .createAccountForm {
-    .add-info {
-      position: relative;
-      width: fit-content;
-      border: 1px solid #0973DC;
-      color: #0973DC;
-      border-radius: 8px;
-      padding: 16px 24px 16px 48px;
+	.createAccountForm {
+		.add-info {
+			position: relative;
+			width: fit-content;
+			border: 1px solid #0973dc;
+			color: #0973dc;
+			border-radius: 8px;
+			padding: 16px 24px 16px 48px;
 
-      .attention-icon {
-        position: absolute;
-        left: 20px;
-      }
+			.attention-icon {
+				position: absolute;
+				left: 20px;
+			}
 
-      p {
-        margin: 0;
-      }
-    }
+			p {
+				margin: 0;
+			}
+		}
 
-    .general-input {
-      display: flex;
-      flex-direction: column;
-      max-width: 340px;
-      width: 100%;
-      margin-top: 1rem;
-    }
+		.general-input {
+			display: flex;
+			flex-direction: column;
+			max-width: 340px;
+			width: 100%;
+			margin-top: 1rem;
+		}
 
-    .general-input > label {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.5rem;
-      color: rgba(0, 0, 0, 0.87);
-      font-size: 0.9em;
-      font-weight: 700;
-    }
+		.general-input > label {
+			display: flex;
+			align-items: center;
+			margin-bottom: 0.5rem;
+			color: rgba(0, 0, 0, 0.87);
+			font-size: 0.9em;
+			font-weight: 600;
+		}
 
-    .radio-group {
-      gap: 1rem;
-    }
+		.radio-group {
+			gap: 1rem;
+		}
 
-    .taxExempt div {
-      display: flex;
-    }
+		.taxExempt div {
+			display: flex;
+		}
 
-    .popup-flex {
-      display: flex;
-      align-items: center;
+		.popup-flex {
+			display: flex;
+			align-items: center;
 
-      i {
-        margin: 4px 0 0 2px;
-      }
-    }
+			i {
+				margin: 4px 0 0 2px;
+			}
+		}
 
-    h3.ui.header {
-      margin-bottom: 0px;
-    }
-  }
+		h3.ui.header {
+			margin-bottom: 0px;
+		}
+	}
 
-  .formActions {
-    margin: 20px 0px;
-    float: right;
-  }
+	.formActions {
+		margin: 20px 0px;
+		float: right;
+	}
 }

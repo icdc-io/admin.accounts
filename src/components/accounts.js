@@ -324,7 +324,7 @@ const LocationAccount = () => {
 				<section>
 					<div className="accounts-header">
 						<div className="accounts-header-item">
-							<h2>{t("accounts")}</h2>
+							<h2 className="page-title">{t("accounts")}</h2>
 							<div className="mark">{accountsData.length}</div>
 						</div>
 						<p
@@ -342,8 +342,9 @@ const LocationAccount = () => {
 							{missedAccounts.map((account, index) => (
 								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 								<div key={index} className="accounts-warn-item">
-									<b>{account}</b>
+									<b>{account}</b>&nbsp;
 									<CopyButton content={account} />
+									&nbsp;
 									<b>{index === missedAccounts.length - 1 ? "." : ","}</b>
 								</div>
 							))}

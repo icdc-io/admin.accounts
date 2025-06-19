@@ -1,4 +1,5 @@
 import { Button } from "container/Button";
+import ErrorScreen from "container/ErrorScreen";
 import { Input } from "container/Input";
 import Loader from "container/Loader";
 import {
@@ -22,6 +23,16 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import "./selectAccount.scss";
+
+export const fullCellWidth = (content) => {
+	return (
+		<TableRow>
+			<TableCell colSpan={100}>
+				<div className="empty-cell">{content}</div>
+			</TableCell>
+		</TableRow>
+	);
+};
 
 const SelectAccounts = ({
 	open,
@@ -169,34 +180,39 @@ const SelectAccounts = ({
 				</DialogHeader>
 
 				<p className="description">{t("connectDescription")}</p>
-				<Input
-					variant="search"
-					placeholder={t("search")}
-					onChange={handleSearch}
-					disabled={allAccounts.length === 0}
-				/>
+				<div className="input-container">
+					<Input
+						variant="search"
+						placeholder={t("search")}
+						onChange={handleSearch}
+						disabled={allAccounts.length === 0}
+					/>
+				</div>
+
 				<div className="table-wrapper">
-					{allAccountsFetchStatus !== "fulfilled" ? (
-						<Loader
-							size="medium"
-							active={allAccountsFetchStatus === "pending"}
-							inline="centered"
-						/>
-					) : (
-						<Table basic="very">
-							<TableHeader className="connectAccount">
-								<TableRow>
-									<TableHead />
-									<TableHead>{t("name")}</TableHead>
-									<TableHead>{t("id")}</TableHead>
-									<TableHead>{t("techCont")}</TableHead>
-									<TableHead>{t("email")}</TableHead>
-									<TableHead>{t("phone")}</TableHead>
-								</TableRow>
-							</TableHeader>
-							<TableBody>{selectAccountsList}</TableBody>
-						</Table>
-					)}
+					<Table>
+						<TableHeader className="connectAccount">
+							<TableRow>
+								<TableHead />
+								<TableHead>{t("name")}</TableHead>
+								<TableHead>{t("id")}</TableHead>
+								<TableHead>{t("techCont")}</TableHead>
+								<TableHead>{t("email")}</TableHead>
+								<TableHead>{t("phone")}</TableHead>
+							</TableRow>
+						</TableHeader>
+						<TableBody>
+							{allAccountsFetchStatus === "pending"
+								? fullCellWidth(<Loader />)
+								: allAccountsFetchStatus === "rejected"
+									? fullCellWidth(<ErrorScreen />)
+									: accounts.length
+										? selectAccountsList
+										: fullCellWidth(
+												<h3 className="empty-list">{t("listEmpty")}</h3>,
+											)}
+						</TableBody>
+					</Table>
 				</div>
 				<DialogFooter className="items-center flex-wrap gap-y-2">
 					<p className="mr-2">
