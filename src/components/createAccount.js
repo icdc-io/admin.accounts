@@ -509,7 +509,7 @@ const CreateAccount = () => {
 								name="taxId"
 								placeholder={t("enterTaxId")}
 								initialValue={form.billing.tax_id}
-								validFunctions={[required, number]}
+								validFunctions={[required]}
 								result={(value) =>
 									setForm({
 										...form,
