@@ -71,9 +71,11 @@ const StatusIndicator = ({ item }) => {
 								item.flow_status[serviceStatus].map((serviceList, i) => (
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									<li key={i}>
-										{capitalizeFirstLetter(
-											serviceList.service.replace("_", " "),
-										)}
+										{serviceList.service
+											? capitalizeFirstLetter(
+													serviceList.service.replace("_", " "),
+												)
+											: serviceList.id.slice(0, 8)}
 									</li>
 								))
 							)
