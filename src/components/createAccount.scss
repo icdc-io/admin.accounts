@@ -7,6 +7,10 @@
 	}
 
 	.createAccountForm {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+
 		.add-info {
 			position: relative;
 			width: fit-content;
@@ -30,16 +34,6 @@
 			flex-direction: column;
 			max-width: 340px;
 			width: 100%;
-			margin-top: 1rem;
-		}
-
-		.general-input > label {
-			display: flex;
-			align-items: center;
-			margin-bottom: 0.5rem;
-			color: rgba(0, 0, 0, 0.87);
-			font-size: 0.9em;
-			font-weight: 600;
 		}
 
 		.radio-group {
@@ -66,6 +60,6 @@
 
 	.formActions {
 		margin: 20px 0px;
-		float: right;
+		align-self: flex-end;
 	}
 }
