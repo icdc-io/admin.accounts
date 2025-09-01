@@ -15,6 +15,7 @@ import {
 } from "../AppActions";
 import {
 	businessTypeOptions,
+	checkIfLegalEntity,
 	countryOptions,
 	initialState,
 	quotasBody,
@@ -47,7 +48,6 @@ const accountOwnerAddInfo = [
 ];
 const FIELD_MIN_LENGTH = 3;
 const billingContactAddInfo = ["billingContactInfo1"];
-const checkIfLegalEntity = (businessType) => businessType === "2";
 const formatPricePlanToOption = (pricePlans) =>
 	pricePlans.map((pricePlan) => ({
 		text: pricePlan.name,
@@ -122,11 +122,11 @@ const CreateAccount = () => {
 	const changeTaxParams = (businessType) => {
 		const isLegalEntity = checkIfLegalEntity(businessType);
 		form.setValue(
-			"tax_id_type.tax_id_type",
+			"billing.tax_id_type",
 			isLegalEntity ? taxIdOptions[0].value : "",
 		);
 		form.setValue(
-			"tax_id_type.tax_exempt",
+			"billing.tax_exempt",
 			isLegalEntity ? taxIExemptOptions[0].value : "",
 		);
 	};
@@ -158,7 +158,8 @@ const CreateAccount = () => {
 
 	const onSubmit = (values) => {
 		const { businessType, ...form } = values;
-		const body = checkIfLegalEntity(businessType)
+		const isLegalEntity = checkIfLegalEntity(businessType);
+		const body = isLegalEntity
 			? {
 					...form,
 					billing: {

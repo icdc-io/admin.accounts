@@ -45,10 +45,16 @@ export const countryOptions = [
 	{ key: "uz", value: "Uzbekistan", text: "Uzbekistan" },
 ];
 
+const NATURAL_PERSON_VALUE = "1";
+const LEGAL_ENTITY_VALUE = "2";
+
 export const businessTypeOptions = [
-	{ text: "naturalPerson", value: "1" },
-	{ text: "legalEntity", value: "2" },
+	{ text: "naturalPerson", value: NATURAL_PERSON_VALUE },
+	{ text: "legalEntity", value: LEGAL_ENTITY_VALUE },
 ];
+
+export const checkIfLegalEntity = (businessType) =>
+	businessType === LEGAL_ENTITY_VALUE;
 
 export const initialState = {
 	/* eslint camelcase: 0 */
