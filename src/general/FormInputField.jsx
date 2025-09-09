@@ -44,7 +44,6 @@ export const InputFormField = ({ fieldInfo, form }) => {
 								placeholder={t(fieldInfo.placeholder)}
 								{...field}
 								onChange={(e) => {
-									console.log(e.target.value);
 									field.onChange(e.target.value);
 									fieldInfo.onChange?.(e.target.value);
 								}}
