@@ -33,7 +33,7 @@ export const RadioFormField = ({ fieldInfo, form }) => {
 							<RadioGroup
 								onValueChange={field.onChange}
 								defaultValue={field.value}
-								className="flex radio-group flex-col"
+								className="flex radio-group gap-4"
 							>
 								{fieldInfo.options.map((item) => (
 									<div

@@ -51,7 +51,6 @@ export const InputFormField = ({ fieldInfo, form }) => {
 								value={String(field.value)}
 								disabled={fieldInfo.disabled}
 								maxLength={rules.maxLength}
-								minLength={rules.minLength}
 							/>
 						</FormControl>
 						{key && <FormMessage>{t(key, options)}</FormMessage>}

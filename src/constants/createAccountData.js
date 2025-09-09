@@ -60,6 +60,7 @@ export const initialState = {
 	/* eslint camelcase: 0 */
 	name: "",
 	locations: [],
+	initial_price_plan_id: "",
 	businessType: businessTypeOptions[0].value,
 	general: {
 		display_name: "",
@@ -130,7 +131,7 @@ export const quotasBody = [
 			},
 			billing_engine: {
 				description: "",
-				initial_price_plan_id: null,
+				// initial_price_plan_id: "",
 			},
 			artifactory: {
 				description: "",

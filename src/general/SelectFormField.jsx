@@ -12,7 +12,7 @@ import { SelectField } from "./SelectField";
 export const SelectFormField = ({ fieldInfo, form }) => {
 	const { t } = useTranslation();
 
-	if (form.getValues(form.name) && !fieldInfo.options?.length) return null;
+	if (form.getValues(form.name) && !fieldInfo.options) return null;
 
 	return (
 		<FormField

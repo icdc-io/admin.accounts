@@ -92,10 +92,6 @@ const LocationAccount = () => {
 		setFilteredData(searchedAccounts);
 	}, [search, accountsData, statusesFilter]);
 
-	const updateAvalibleGrid = () => {
-		dispatch(fetchAccountsAvailableData(location));
-	};
-
 	const onConnect = (accountsToConnect, quotas) => {
 		dispatch(connectAccount({ accounts: accountsToConnect, location }));
 		dispatch(setupAccount(quotas));
@@ -399,7 +395,6 @@ const LocationAccount = () => {
 							onCancel={onCancelConnect}
 							onConnect={onConnect}
 							isConnectionInProgress={connectStatus === "pending"}
-							updateAvalibleGrid={updateAvalibleGrid}
 						/>
 					)}
 					<div className="accounts-list-table-wrapper">
