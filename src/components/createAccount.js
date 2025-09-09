@@ -34,8 +34,8 @@ import {
 import AddInfo from "./addInfo";
 import ConnectProcessModal from "./connectAccountProcess";
 import "./createAccount.scss";
+import { OctagonAlert } from "lucide-react";
 import { RadioFormField } from "../general/RadioFormField";
-import { SelectField } from "../general/SelectField";
 import { getPricePlans } from "../queries/getPricePlans";
 
 const accountOwnerAddInfo = [
@@ -65,7 +65,13 @@ const CreateAccount = () => {
 		(state) => state.AccountsStore.setupApiVersion,
 	);
 	const location = useSelector((state) => state.host.user.location);
-	const { data: pricePlans, fetchStatus, isSuccess } = getPricePlans();
+	const {
+		data: pricePlans,
+		fetchStatus,
+		isSuccess,
+		isError,
+		isFetching,
+	} = getPricePlans();
 	const isPricePlansWasFetched = isSuccess && fetchStatus === "idle";
 	const pricePlansOptions = pricePlans
 		? formatPricePlanToOption(pricePlans)
@@ -209,160 +215,16 @@ const CreateAccount = () => {
 					className="createAccountForm"
 					onSubmit={form.handleSubmit(onSubmit)}
 				>
-					<h3>{t("infoAccount")}</h3>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "general.display_name",
-							placeholder: "enterName",
-							label: "display_name",
-							onChange: onDisplayNameChange,
-							rules: {
-								required: "required",
-								pattern: {
-									value: nameWithSpacePattern,
-									message: "nameWithSpace",
-								},
-							},
-						}}
-					/>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "name",
-							placeholder: "enterId",
-							label: "ID",
-							onChange: onNameChange,
-							rules: {
-								required: "required",
-								maxLength: 5,
-								minLength: {
-									value: FIELD_MIN_LENGTH,
-									message: formatI18nMessageToString(
-										"minLength",
-										FIELD_MIN_LENGTH,
-									),
-								},
-								pattern: {
-									value: idValidationPattern,
-									message: "idValidation",
-								},
-							},
-						}}
-					/>
-					<h3>{t("pricePlan")}</h3>
-					<div className={"flex flex-col space-y-2 general-input"}>
-						<SelectFormField
-							form={form}
-							fieldInfo={{
-								name: "initial_price_plan_id",
-								options: pricePlansOptions,
-								label: "selectPricePlan",
-								placeholder: "selectPricePlan",
-								rules: {
-									required: "required",
-								},
-							}}
-						/>
-					</div>
-					<h3>{t("accountOwner")}</h3>
-					<AddInfo items={accountOwnerAddInfo} />
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "general.contact.first_name",
-							placeholder: "enterFirstName",
-							label: "firstName",
-							rules: {
-								required: "required",
-							},
-						}}
-					/>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "general.contact.last_name",
-							placeholder: "enterLastName",
-							label: "lastName",
-							rules: {
-								required: "required",
-							},
-						}}
-					/>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "general.contact.title",
-							placeholder: "enterTitle",
-							label: "title",
-							rules: {
-								required: "required",
-								minLength: {
-									value: FIELD_MIN_LENGTH,
-									message: formatI18nMessageToString(
-										"minLength",
-										FIELD_MIN_LENGTH,
-									),
-								},
-							},
-						}}
-					/>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "general.contact.email",
-							placeholder: "enterEmail",
-							label: "email",
-							onChange: isLegalEntity
-								? undefined
-								: changeExtraField("general.email"),
-							rules: {
-								required: "required",
-								pattern: {
-									value: emailPattern,
-									message: "email",
-								},
-							},
-						}}
-					/>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "general.contact.phone",
-							placeholder: "enterPhone",
-							label: "phone",
-							onChange: isLegalEntity
-								? undefined
-								: changeExtraField("general.phone"),
-							rules: {
-								required: "required",
-								pattern: {
-									value: phoneNumberPattern,
-									message: "phoneNumberValidation",
-								},
-							},
-						}}
-					/>
-					<h3>{t("businessInfo")}</h3>
-					<SelectFormField
-						form={form}
-						fieldInfo={{
-							options: businessTypeOptions,
-							label: "typeOfBusiness",
-							name: "businessType",
-							placeholder: "typeOfBusiness",
-							onChange: changeTaxParams,
-						}}
-					/>
-					{!isLegalEntity && (
-						<>
+					<div className="section_wrapper">
+						<h3>{t("infoAccount")}</h3>
+						<div className="inputs_grid">
 							<InputFormField
 								form={form}
 								fieldInfo={{
-									name: "billing.name",
-									placeholder: "enterCustomerFullName",
-									label: "customerFullName",
-									clarification: "customerNamePrompt",
+									name: "general.display_name",
+									placeholder: "enterName",
+									label: "display_name",
+									onChange: onDisplayNameChange,
 									rules: {
 										required: "required",
 										pattern: {
@@ -372,242 +234,65 @@ const CreateAccount = () => {
 									},
 								}}
 							/>
-						</>
-					)}
-					{isLegalEntity && (
-						<>
 							<InputFormField
 								form={form}
 								fieldInfo={{
-									name: "billing.name",
-									placeholder: "enterOrganizationName",
-									label: "organizationName",
+									name: "name",
+									placeholder: "enterId",
+									label: "ID",
+									onChange: onNameChange,
 									rules: {
 										required: "required",
-									},
-								}}
-							/>
-							<InputFormField
-								form={form}
-								fieldInfo={{
-									name: "billing.phone",
-									placeholder: "enterPhone",
-									label: "phone",
-									onChange: changeExtraField("general.phone"),
-									rules: {
-										required: "required",
+										maxLength: 5,
+										minLength: {
+											value: FIELD_MIN_LENGTH,
+											message: formatI18nMessageToString(
+												"minLength",
+												FIELD_MIN_LENGTH,
+											),
+										},
 										pattern: {
-											value: phoneNumberPattern,
-											message: "phoneNumberValidation",
+											value: idValidationPattern,
+											message: "idValidation",
 										},
 									},
 								}}
 							/>
-							<InputFormField
-								form={form}
-								fieldInfo={{
-									name: "billing.email",
-									placeholder: "enterEmail",
-									label: "email",
-									onChange: changeExtraField("general.email"),
-									rules: {
-										required: "required",
-										pattern: {
-											value: emailPattern,
-											message: "email",
-										},
-									},
-								}}
-							/>
-						</>
-					)}
-					<h3>{isLegalEntity ? t("address") : t("residenceAddress")}</h3>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "billing.address.street",
-							placeholder: "enterAdress",
-							label: "address",
-							rules: {
-								required: "required",
-								minLength: {
-									value: FIELD_MIN_LENGTH,
-									message: formatI18nMessageToString(
-										"minLength",
-										FIELD_MIN_LENGTH,
-									),
+						</div>
+					</div>
+					<div className="section_wrapper">
+						<h3>{t("pricePlan")}</h3>
+						<SelectFormField
+							form={form}
+							fieldInfo={{
+								name: "initial_price_plan_id",
+								options: pricePlansOptions,
+								label: "selectPricePlan",
+								placeholder: "selectPricePlan",
+								disabled: isError,
+								rules: {
+									required: "required",
 								},
-							},
-						}}
-					/>
-
-					<SelectFormField
-						form={form}
-						fieldInfo={{
-							options: countryOptions,
-							label: "country",
-							name: "billing.address.country",
-							placeholder: "country",
-						}}
-					/>
-
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "billing.address.city",
-							placeholder: "enterCity",
-							label: "city",
-							rules: {
-								required: "required",
-								minLength: {
-									value: FIELD_MIN_LENGTH,
-									message: formatI18nMessageToString(
-										"minLength",
-										FIELD_MIN_LENGTH,
-									),
-								},
-							},
-						}}
-					/>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "billing.address.state",
-							placeholder: "enterRegion",
-							label: "region",
-							rules: {
-								required: "required",
-								minLength: {
-									value: FIELD_MIN_LENGTH,
-									message: formatI18nMessageToString(
-										"minLength",
-										FIELD_MIN_LENGTH,
-									),
-								},
-							},
-						}}
-					/>
-					<InputFormField
-						form={form}
-						fieldInfo={{
-							name: "billing.address.postal_code",
-							placeholder: "enterZip",
-							label: "zipCode",
-							rules: {
-								required: "required",
-							},
-						}}
-					/>
-					{isLegalEntity && (
-						<>
-							<h3>{t("billingInfo")}</h3>
+								isLoading: isFetching,
+							}}
+						>
+							{isError && (
+								<AddInfo
+									title={"pricePlansFetchingError"}
+									className="warning"
+									icon={OctagonAlert}
+								/>
+							)}
+						</SelectFormField>
+					</div>
+					<div className="section_wrapper">
+						<h3>{t("accountOwner")}</h3>
+						<AddInfo items={accountOwnerAddInfo} />
+						<div className="inputs_grid">
 							<InputFormField
 								form={form}
 								fieldInfo={{
-									name: "billing.tax_id",
-									placeholder: "enterTaxId",
-									label: "taxId",
-									rules: {
-										required: "required",
-									},
-								}}
-							/>
-							<RadioFormField
-								form={form}
-								fieldInfo={{
-									name: "billing.tax_exempt",
-									label: "taxExempt",
-									options: taxIExemptOptions,
-								}}
-							/>
-							<SelectFormField
-								form={form}
-								fieldInfo={{
-									options: taxIdOptions,
-									label: "taxIdtype",
-									name: "billing.tax_id_type",
-									placeholder: "taxIdtype",
-								}}
-							/>
-							<h3>{t("paymentMethod")}</h3>
-							<InputFormField
-								form={form}
-								fieldInfo={{
-									name: "payment_methods.0.bank_transfer.bank_name",
-									placeholder: "enterBankName",
-									label: "bankName",
-									rules: {
-										minLength: {
-											value: FIELD_MIN_LENGTH,
-											message: formatI18nMessageToString(
-												"minLength",
-												FIELD_MIN_LENGTH,
-											),
-										},
-									},
-								}}
-							/>
-							<InputFormField
-								form={form}
-								fieldInfo={{
-									name: "payment_methods.0.bank_transfer.bank_address.street",
-									placeholder: "enterAdress",
-									label: "bankAddress",
-									rules: {
-										minLength: {
-											value: FIELD_MIN_LENGTH,
-											message: formatI18nMessageToString(
-												"minLength",
-												FIELD_MIN_LENGTH,
-											),
-										},
-									},
-								}}
-							/>
-							<InputFormField
-								form={form}
-								fieldInfo={{
-									name: "payment_methods.0.bank_transfer.iban",
-									placeholder: "enterPaymentAccNumber",
-									label: "paymentAccNumber",
-									rules: {
-										minLength: {
-											value: FIELD_MIN_LENGTH,
-											message: formatI18nMessageToString(
-												"minLength",
-												FIELD_MIN_LENGTH,
-											),
-										},
-									},
-								}}
-							/>
-							<InputFormField
-								form={form}
-								fieldInfo={{
-									name: "payment_methods.0.bank_transfer.bic",
-									placeholder: "enterBic",
-									label: "bic",
-									rules: {
-										minLength: {
-											value: FIELD_MIN_LENGTH,
-											message: formatI18nMessageToString(
-												"minLength",
-												FIELD_MIN_LENGTH,
-											),
-										},
-									},
-								}}
-							/>
-						</>
-					)}
-					{isLegalEntity && (
-						<>
-							<h3>{t("billingContact")}</h3>
-							<AddInfo t={t} items={billingContactAddInfo} />
-							<InputFormField
-								form={form}
-								fieldInfo={{
-									name: "billing.contact.first_name",
+									name: "general.contact.first_name",
 									placeholder: "enterFirstName",
 									label: "firstName",
 									rules: {
@@ -618,7 +303,7 @@ const CreateAccount = () => {
 							<InputFormField
 								form={form}
 								fieldInfo={{
-									name: "billing.contact.last_name",
+									name: "general.contact.last_name",
 									placeholder: "enterLastName",
 									label: "lastName",
 									rules: {
@@ -629,20 +314,30 @@ const CreateAccount = () => {
 							<InputFormField
 								form={form}
 								fieldInfo={{
-									name: "billing.contact.title",
+									name: "general.contact.title",
 									placeholder: "enterTitle",
 									label: "title",
 									rules: {
 										required: "required",
+										minLength: {
+											value: FIELD_MIN_LENGTH,
+											message: formatI18nMessageToString(
+												"minLength",
+												FIELD_MIN_LENGTH,
+											),
+										},
 									},
 								}}
 							/>
 							<InputFormField
 								form={form}
 								fieldInfo={{
-									name: "billing.contact.email",
+									name: "general.contact.email",
 									placeholder: "enterEmail",
 									label: "email",
+									onChange: isLegalEntity
+										? undefined
+										: changeExtraField("general.email"),
 									rules: {
 										required: "required",
 										pattern: {
@@ -655,9 +350,12 @@ const CreateAccount = () => {
 							<InputFormField
 								form={form}
 								fieldInfo={{
-									name: "billing.contact.phone",
+									name: "general.contact.phone",
 									placeholder: "enterPhone",
 									label: "phone",
+									onChange: isLegalEntity
+										? undefined
+										: changeExtraField("general.phone"),
 									rules: {
 										required: "required",
 										pattern: {
@@ -667,8 +365,357 @@ const CreateAccount = () => {
 									},
 								}}
 							/>
+						</div>
+					</div>
+
+					<div className="section_wrapper">
+						<h3>{t("businessInfo")}</h3>
+						<div className="inputs_grid">
+							<SelectFormField
+								form={form}
+								fieldInfo={{
+									options: businessTypeOptions,
+									label: "typeOfBusiness",
+									name: "businessType",
+									placeholder: "typeOfBusiness",
+									onChange: changeTaxParams,
+								}}
+							/>
+							{!isLegalEntity && (
+								<>
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "billing.name",
+											placeholder: "enterCustomerFullName",
+											label: "customerFullName",
+											clarification: "customerNamePrompt",
+											rules: {
+												required: "required",
+												pattern: {
+													value: nameWithSpacePattern,
+													message: "nameWithSpace",
+												},
+											},
+										}}
+									/>
+								</>
+							)}
+							{isLegalEntity && (
+								<>
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "billing.name",
+											placeholder: "enterOrganizationName",
+											label: "organizationName",
+											rules: {
+												required: "required",
+											},
+										}}
+									/>
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "billing.phone",
+											placeholder: "enterPhone",
+											label: "phone",
+											onChange: changeExtraField("general.phone"),
+											rules: {
+												required: "required",
+												pattern: {
+													value: phoneNumberPattern,
+													message: "phoneNumberValidation",
+												},
+											},
+										}}
+									/>
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "billing.email",
+											placeholder: "enterEmail",
+											label: "email",
+											onChange: changeExtraField("general.email"),
+											rules: {
+												required: "required",
+												pattern: {
+													value: emailPattern,
+													message: "email",
+												},
+											},
+										}}
+									/>
+								</>
+							)}
+						</div>
+					</div>
+
+					<div className="section_wrapper">
+						<h3>{isLegalEntity ? t("address") : t("residenceAddress")}</h3>
+						<div className="inputs_grid">
+							<InputFormField
+								form={form}
+								fieldInfo={{
+									name: "billing.address.street",
+									placeholder: "enterAdress",
+									label: "address",
+									rules: {
+										required: "required",
+										minLength: {
+											value: FIELD_MIN_LENGTH,
+											message: formatI18nMessageToString(
+												"minLength",
+												FIELD_MIN_LENGTH,
+											),
+										},
+									},
+								}}
+							/>
+
+							<SelectFormField
+								form={form}
+								fieldInfo={{
+									options: countryOptions,
+									label: "country",
+									name: "billing.address.country",
+									placeholder: "country",
+								}}
+							/>
+
+							<InputFormField
+								form={form}
+								fieldInfo={{
+									name: "billing.address.city",
+									placeholder: "enterCity",
+									label: "city",
+									rules: {
+										required: "required",
+										minLength: {
+											value: FIELD_MIN_LENGTH,
+											message: formatI18nMessageToString(
+												"minLength",
+												FIELD_MIN_LENGTH,
+											),
+										},
+									},
+								}}
+							/>
+							<InputFormField
+								form={form}
+								fieldInfo={{
+									name: "billing.address.state",
+									placeholder: "enterRegion",
+									label: "region",
+									rules: {
+										required: "required",
+										minLength: {
+											value: FIELD_MIN_LENGTH,
+											message: formatI18nMessageToString(
+												"minLength",
+												FIELD_MIN_LENGTH,
+											),
+										},
+									},
+								}}
+							/>
+							<InputFormField
+								form={form}
+								fieldInfo={{
+									name: "billing.address.postal_code",
+									placeholder: "enterZip",
+									label: "zipCode",
+									rules: {
+										required: "required",
+									},
+								}}
+							/>
+						</div>
+					</div>
+
+					{isLegalEntity && (
+						<>
+							<div className="section_wrapper">
+								<h3>{t("billingInfo")}</h3>
+								<div className="inputs_grid">
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "billing.tax_id",
+											placeholder: "enterTaxId",
+											label: "taxId",
+											rules: {
+												required: "required",
+											},
+										}}
+									/>
+									<RadioFormField
+										form={form}
+										fieldInfo={{
+											name: "billing.tax_exempt",
+											label: "taxExempt",
+											options: taxIExemptOptions,
+										}}
+									/>
+									<SelectFormField
+										form={form}
+										fieldInfo={{
+											options: taxIdOptions,
+											label: "taxIdtype",
+											name: "billing.tax_id_type",
+											placeholder: "taxIdtype",
+										}}
+									/>
+								</div>
+							</div>
+							<div className="section_wrapper">
+								<h3>{t("paymentMethod")}</h3>
+								<div className="inputs_grid">
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "payment_methods.0.bank_transfer.bank_name",
+											placeholder: "enterBankName",
+											label: "bankName",
+											rules: {
+												minLength: {
+													value: FIELD_MIN_LENGTH,
+													message: formatI18nMessageToString(
+														"minLength",
+														FIELD_MIN_LENGTH,
+													),
+												},
+											},
+										}}
+									/>
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "payment_methods.0.bank_transfer.bank_address.street",
+											placeholder: "enterAdress",
+											label: "bankAddress",
+											rules: {
+												minLength: {
+													value: FIELD_MIN_LENGTH,
+													message: formatI18nMessageToString(
+														"minLength",
+														FIELD_MIN_LENGTH,
+													),
+												},
+											},
+										}}
+									/>
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "payment_methods.0.bank_transfer.iban",
+											placeholder: "enterPaymentAccNumber",
+											label: "paymentAccNumber",
+											rules: {
+												minLength: {
+													value: FIELD_MIN_LENGTH,
+													message: formatI18nMessageToString(
+														"minLength",
+														FIELD_MIN_LENGTH,
+													),
+												},
+											},
+										}}
+									/>
+									<InputFormField
+										form={form}
+										fieldInfo={{
+											name: "payment_methods.0.bank_transfer.bic",
+											placeholder: "enterBic",
+											label: "bic",
+											rules: {
+												minLength: {
+													value: FIELD_MIN_LENGTH,
+													message: formatI18nMessageToString(
+														"minLength",
+														FIELD_MIN_LENGTH,
+													),
+												},
+											},
+										}}
+									/>
+								</div>
+							</div>
 						</>
 					)}
+
+					{isLegalEntity && (
+						<div className="section_wrapper">
+							<h3>{t("billingContact")}</h3>
+							<AddInfo t={t} items={billingContactAddInfo} />
+							<div className="inputs_grid">
+								<InputFormField
+									form={form}
+									fieldInfo={{
+										name: "billing.contact.first_name",
+										placeholder: "enterFirstName",
+										label: "firstName",
+										rules: {
+											required: "required",
+										},
+									}}
+								/>
+								<InputFormField
+									form={form}
+									fieldInfo={{
+										name: "billing.contact.last_name",
+										placeholder: "enterLastName",
+										label: "lastName",
+										rules: {
+											required: "required",
+										},
+									}}
+								/>
+								<InputFormField
+									form={form}
+									fieldInfo={{
+										name: "billing.contact.title",
+										placeholder: "enterTitle",
+										label: "title",
+										rules: {
+											required: "required",
+										},
+									}}
+								/>
+								<InputFormField
+									form={form}
+									fieldInfo={{
+										name: "billing.contact.email",
+										placeholder: "enterEmail",
+										label: "email",
+										rules: {
+											required: "required",
+											pattern: {
+												value: emailPattern,
+												message: "email",
+											},
+										},
+									}}
+								/>
+								<InputFormField
+									form={form}
+									fieldInfo={{
+										name: "billing.contact.phone",
+										placeholder: "enterPhone",
+										label: "phone",
+										rules: {
+											required: "required",
+											pattern: {
+												value: phoneNumberPattern,
+												message: "phoneNumberValidation",
+											},
+										},
+									}}
+								/>
+							</div>
+						</div>
+					)}
+
 					<div className="formActions flex flex-wrap gap-2">
 						<Link to="..">
 							<Button type="button" variant="secondary">

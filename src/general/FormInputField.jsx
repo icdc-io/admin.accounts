@@ -27,7 +27,7 @@ export const InputFormField = ({ fieldInfo, form }) => {
 				const { error } = form.getFieldState(fieldInfo.name);
 				const [key, options] = formatI18nMessageToObject(error?.message);
 				return (
-					<FormItem className={"general-input"}>
+					<FormItem className={""}>
 						<FormLabel className="flex items-center">
 							<b>{t(fieldInfo.label)}</b>
 							&nbsp;
