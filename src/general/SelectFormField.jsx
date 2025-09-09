@@ -9,7 +9,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { SelectField } from "./SelectField";
 
-export const SelectFormField = ({ fieldInfo, form }) => {
+export const SelectFormField = ({ fieldInfo, form, children }) => {
 	const { t } = useTranslation();
 
 	if (form.getValues(form.name) && !fieldInfo.options) return null;
@@ -27,10 +27,11 @@ export const SelectFormField = ({ fieldInfo, form }) => {
 					fieldInfo.onChange?.(value);
 				};
 				return (
-					<FormItem className={"general-input"}>
+					<FormItem className={""}>
 						<FormLabel>
 							<b>{t(fieldInfo.label)}</b>
 						</FormLabel>
+						{children}
 						<FormControl>
 							<SelectField
 								value={field.value}
@@ -38,6 +39,7 @@ export const SelectFormField = ({ fieldInfo, form }) => {
 								options={fieldInfo.options}
 								disabled={fieldInfo.disabled}
 								placeholder={fieldInfo.placeholder}
+								isLoading={fieldInfo.isLoading}
 							/>
 						</FormControl>
 

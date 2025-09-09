@@ -27,7 +27,7 @@ export const InputFormField = ({ fieldInfo, form }) => {
 				const { error } = form.getFieldState(fieldInfo.name);
 				const [key, options] = formatI18nMessageToObject(error?.message);
 				return (
-					<FormItem className={"general-input"}>
+					<FormItem className={""}>
 						<FormLabel className="flex items-center">
 							<b>{t(fieldInfo.label)}</b>
 							&nbsp;
@@ -44,7 +44,6 @@ export const InputFormField = ({ fieldInfo, form }) => {
 								placeholder={t(fieldInfo.placeholder)}
 								{...field}
 								onChange={(e) => {
-									console.log(e.target.value);
 									field.onChange(e.target.value);
 									fieldInfo.onChange?.(e.target.value);
 								}}

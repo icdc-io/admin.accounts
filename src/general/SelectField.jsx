@@ -1,12 +1,4 @@
 import {
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "container/Form";
-import {
 	Select,
 	SelectContent,
 	SelectItem,
@@ -21,12 +13,13 @@ export const SelectField = ({
 	options,
 	disabled,
 	placeholder,
+	isLoading,
 }) => {
 	const { t } = useTranslation();
 
 	return (
 		<Select onValueChange={onChange} value={value} disabled={disabled}>
-			<SelectTrigger>
+			<SelectTrigger isLoading={isLoading}>
 				<SelectValue placeholder={t(placeholder)} />
 			</SelectTrigger>
 			<SelectContent>

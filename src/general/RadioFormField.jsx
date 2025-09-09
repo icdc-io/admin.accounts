@@ -22,7 +22,7 @@ export const RadioFormField = ({ fieldInfo, form }) => {
 			render={({ field }) => {
 				const { error } = form.getFieldState(fieldInfo.name);
 				return (
-					<FormItem className="general-input radio-field">
+					<FormItem className="radio-field">
 						<FormLabel>
 							<b>{t(fieldInfo.label)}</b>
 						</FormLabel>
