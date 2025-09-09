@@ -70,7 +70,6 @@ const CreateAccount = () => {
 	const pricePlansOptions = pricePlans
 		? formatPricePlanToOption(pricePlans)
 		: [];
-	const [pricePlanId, setPricePlanId] = useState("");
 	const isOldSetupApiVersion = setupApiVersion === "old";
 
 	const dispatch = useDispatch();
@@ -88,7 +87,8 @@ const CreateAccount = () => {
 			const defaultPricePlan = pricePlans.find(
 				(pricePlan) => pricePlan.default,
 			);
-			if (defaultPricePlan) setPricePlanId(`${defaultPricePlan.id}`);
+			if (defaultPricePlan)
+				form.setValue("initial_price_plan_id", `${defaultPricePlan.id}`);
 		}
 	}, [isPricePlansWasFetched]);
 
@@ -137,7 +137,9 @@ const CreateAccount = () => {
 
 	useEffect(() => {
 		if (accountRegistrationStatus === "fulfilled") {
-			quotas[0].quotas.billing_engine.initial_price_plan_id = +pricePlanId;
+			quotas[0].quotas.billing_engine.initial_price_plan_id = +form.getValues(
+				"initial_price_plan_id",
+			);
 			dispatch(setupAccount(quotas));
 		}
 	}, [accountRegistrationStatus]);
@@ -157,7 +159,7 @@ const CreateAccount = () => {
 	);
 
 	const onSubmit = (values) => {
-		const { businessType, ...form } = values;
+		const { businessType, initial_price_plan_id, ...form } = values;
 		const isLegalEntity = checkIfLegalEntity(businessType);
 		const body = isLegalEntity
 			? {
@@ -190,8 +192,6 @@ const CreateAccount = () => {
 
 		dispatch(createAccount(body));
 	};
-
-	const changePricePlanId = (value) => setPricePlanId(value);
 
 	const getContent = () => {
 		if (
@@ -236,6 +236,13 @@ const CreateAccount = () => {
 							rules: {
 								required: "required",
 								maxLength: 5,
+								minLength: {
+									value: FIELD_MIN_LENGTH,
+									message: formatI18nMessageToString(
+										"minLength",
+										FIELD_MIN_LENGTH,
+									),
+								},
 								pattern: {
 									value: idValidationPattern,
 									message: "idValidation",
@@ -243,21 +250,21 @@ const CreateAccount = () => {
 							},
 						}}
 					/>
-					{isPricePlansWasFetched && (
-						<>
-							<h3>{t("accountOwner")}</h3>
-							<div className={"flex flex-col space-y-2 general-input"}>
-								<Label>
-									<b>{t("selectPricePlan")}</b>
-								</Label>
-								<SelectField
-									value={pricePlanId}
-									onChange={changePricePlanId}
-									options={pricePlansOptions}
-								/>
-							</div>
-						</>
-					)}
+					<h3>{t("pricePlan")}</h3>
+					<div className={"flex flex-col space-y-2 general-input"}>
+						<SelectFormField
+							form={form}
+							fieldInfo={{
+								name: "initial_price_plan_id",
+								options: pricePlansOptions,
+								label: "selectPricePlan",
+								placeholder: "selectPricePlan",
+								rules: {
+									required: "required",
+								},
+							}}
+						/>
+					</div>
 					<h3>{t("accountOwner")}</h3>
 					<AddInfo items={accountOwnerAddInfo} />
 					<InputFormField

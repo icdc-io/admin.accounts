@@ -6,6 +6,11 @@
 		margin: 26px 0 26px 0px;
 	}
 
+	label.text-destructive ~ div button[role="combobox"] {
+		border-color: var(--error-input-border);
+    background-color: var(--error-input-bg);
+	}
+
 	.createAccountForm {
 		display: flex;
 		flex-direction: column;
