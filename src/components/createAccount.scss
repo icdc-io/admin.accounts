@@ -1,23 +1,79 @@
 .create-account-wrapper {
-	padding: 2rem;
+	padding: 2rem min(2rem, 5%);
 	background-color: white;
 
 	h2 {
 		margin: 26px 0 26px 0px;
+		font-size: 28px;
+		font-weight: 800;
+	}
+
+	label.text-destructive ~ div button[role="combobox"] {
+		border-color: var(--error-input-border);
+    background-color: var(--error-input-bg);
 	}
 
 	.createAccountForm {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		width: 100%;
+		max-width: 750px;
+
+		h3 {
+			margin-bottom: 1rem;
+		}
+
+		input,  button[role="combobox"], button[role="radio"] {
+			background-color: var(--white);
+			max-width: 340px;
+		}
+
+		.inputs_grid {
+			display: flex;
+			gap: 1rem;
+			flex-wrap: wrap;
+
+			& > div {
+				flex-grow: 1;
+				flex-basis: 340px;
+			}
+		}
+
+		.section_wrapper {
+			background-color: #F6F6F6;
+			border-radius: 8px;
+			padding: 16px min(24px, 5%);
+		}
+
 		.add-info {
 			position: relative;
-			width: fit-content;
-			border: 1px solid #0973dc;
-			color: #0973dc;
+			width: 100%;
+			border-width: 1px;
+			border-style: solid;
 			border-radius: 8px;
 			padding: 16px 24px 16px 48px;
+			margin: 1rem 0;
+
+			h4 {
+				font-size: 16px;
+				font-weight: 500;
+			}
+
+			&.info {
+				border-color: #0973dc;
+				color: #0973dc;
+			}
+
+			&.warning {
+				border-color: #DC7609;
+				color: #DC7609;
+			}
 
 			.attention-icon {
 				position: absolute;
 				left: 20px;
+				top: 20px;
 			}
 
 			p {
@@ -26,20 +82,8 @@
 		}
 
 		.general-input {
-			display: flex;
-			flex-direction: column;
 			max-width: 340px;
 			width: 100%;
-			margin-top: 1rem;
-		}
-
-		.general-input > label {
-			display: flex;
-			align-items: center;
-			margin-bottom: 0.5rem;
-			color: rgba(0, 0, 0, 0.87);
-			font-size: 0.9em;
-			font-weight: 600;
 		}
 
 		.radio-group {
@@ -66,6 +110,6 @@
 
 	.formActions {
 		margin: 20px 0px;
-		float: right;
+		align-self: flex-end;
 	}
 }

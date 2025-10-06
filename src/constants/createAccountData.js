@@ -45,10 +45,23 @@ export const countryOptions = [
 	{ key: "uz", value: "Uzbekistan", text: "Uzbekistan" },
 ];
 
+const NATURAL_PERSON_VALUE = "1";
+const LEGAL_ENTITY_VALUE = "2";
+
+export const businessTypeOptions = [
+	{ text: "naturalPerson", value: NATURAL_PERSON_VALUE },
+	{ text: "legalEntity", value: LEGAL_ENTITY_VALUE },
+];
+
+export const checkIfLegalEntity = (businessType) =>
+	businessType === LEGAL_ENTITY_VALUE;
+
 export const initialState = {
 	/* eslint camelcase: 0 */
 	name: "",
 	locations: [],
+	initial_price_plan_id: "",
+	businessType: businessTypeOptions[0].value,
 	general: {
 		display_name: "",
 		email: "",
@@ -118,6 +131,7 @@ export const quotasBody = [
 			},
 			billing_engine: {
 				description: "",
+				// initial_price_plan_id: "",
 			},
 			artifactory: {
 				description: "",
@@ -130,4 +144,9 @@ export const quotasBody = [
 export const taxIdOptions = [
 	{ text: "eu_vat", value: "eu_vat" },
 	{ text: "by_unp", value: "by_unp" },
+];
+
+export const taxIExemptOptions = [
+	{ text: "noTaxExempt", value: "none" },
+	{ text: "yesTaxExempt", value: "yes" },
 ];

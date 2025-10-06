@@ -21,8 +21,9 @@ import {
 import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./selectAccount.scss";
+import { fetchAccountsAvailableData } from "../AppActions";
 
 export const fullCellWidth = (content) => {
 	return (
@@ -39,21 +40,24 @@ const SelectAccounts = ({
 	onConnect,
 	onCancel,
 	isConnectionInProgress,
-	updateAvalibleGrid,
 }) => {
 	const { t } = useTranslation();
 
 	const [accounts, setAccounts] = useState([]);
 	const [selectedAccounts, setSelectedAccounts] = useState([]);
-
 	const [quotas, setQuotas] = useState([]);
+	const dispatch = useDispatch();
+	const location = useSelector((state) => state.host.user.location);
 
 	const allAccountsFetchStatus = useSelector(
 		(state) => state.AccountsStore.allAccountsFetchStatus,
 	);
 	const allAccounts = useSelector((state) => state.AccountsStore.allAccounts);
 
-	useEffect(updateAvalibleGrid, []);
+	useEffect(() => {
+		if (!open) return;
+		dispatch(fetchAccountsAvailableData(location));
+	}, [location, open]);
 
 	useEffect(() => {
 		const sortSelectAccountsList = [...allAccounts].sort((a, b) =>

@@ -11,6 +11,7 @@ export const setupAccountUrl = (accountName) => `accounts/${accountName}`;
 export const setupAccountsUrl = () => "accounts";
 export const setupflowsUrl = (flow_id) => `flows/${flow_id}`;
 export const ACCOUNTS_REGISTRATION_URL = `${BASE_URL}/accounts/v1/registration`;
+export const PRICE_PLANS_URL = "/api/billing_engine/v1/price_plans";
 
 export const ACCOUNTS_AVAILABLE_FETCH = "ACCOUNTS_AVAILABLE_FETCH";
 export const ACCOUNTS_DATA_FETCH = "ACCOUNTS_DATA_FETCH";
