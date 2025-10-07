@@ -23,6 +23,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import "./selectAccount.scss";
+import { Checkbox } from "container/Checkbox";
 import { fetchAccountsAvailableData } from "../AppActions";
 
 export const fullCellWidth = (content) => {
@@ -83,15 +84,13 @@ const SelectAccounts = ({
 		);
 	}, [accounts]);
 
-	const toggleCheckBox = (id) => (e) => {
+	const toggleCheckBox = (id) => (checked) => {
 		setAccounts(
-			accounts.map((a) =>
-				a.id === id ? { ...a, isChecked: e.target.checked } : a,
-			),
+			accounts.map((a) => (a.id === id ? { ...a, isChecked: checked } : a)),
 		);
 
 		const itemIndex = selectedAccounts.findIndex((item) => item.id === id);
-		if (itemIndex === -1 && e.target.checked) {
+		if (itemIndex === -1 && checked) {
 			const newItem = accounts.find((item) => item.id === id);
 			if (newItem) {
 				setSelectedAccounts((prev) => [
@@ -99,7 +98,7 @@ const SelectAccounts = ({
 					{ ...newItem, isChecked: true },
 				]);
 			}
-		} else if (itemIndex !== -1 && !e.target.checked) {
+		} else if (itemIndex !== -1 && !checked) {
 			setSelectedAccounts(selectedAccounts.filter((item) => item.id !== id));
 		}
 	};
@@ -155,16 +154,10 @@ const SelectAccounts = ({
 	const selectAccountsList = accounts.map((el) => (
 		<TableRow key={el.id} className="connectElements">
 			<TableCell>
-				<label>
-					<input
-						type="checkbox"
-						value={el.isChecked}
-						onClick={toggleCheckBox(el.id)}
-					/>
-					<span>
-						<div className={el.isChecked ? "check-circle" : ""} />
-					</span>
-				</label>
+				<Checkbox
+					checked={el.isChecked}
+					onCheckedChange={toggleCheckBox(el.id)}
+				/>
 			</TableCell>
 			<TableCell>{el.displayName}</TableCell>
 			<TableCell>{el.idIcdc}</TableCell>
