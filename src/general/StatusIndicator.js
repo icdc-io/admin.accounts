@@ -1,6 +1,5 @@
 import Popup from "container/Popup";
 import { CircleCheck, CircleMinus, Clock } from "lucide-react";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { accountStatuses } from "../constants/accountStatuses";
 import { capitalizeFirstLetter } from "../utilities/CapitalizeFirstLetter";
@@ -54,7 +53,6 @@ const StatusIndicator = ({ item }) => {
 	const popupContent = (
 		<>
 			{servicesStatuses.map((serviceStatus, i) => (
-				// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 				<div key={i}>
 					<p>{t(serviceStatus)}</p>
 					<ul>
@@ -69,7 +67,6 @@ const StatusIndicator = ({ item }) => {
 								</li>
 							) : (
 								item.flow_status[serviceStatus].map((serviceList, i) => (
-									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									<li key={i}>
 										{serviceList.service
 											? capitalizeFirstLetter(

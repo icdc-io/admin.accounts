@@ -1,0 +1,56 @@
+stages:
+  - audit
+  - quality
+
+variables:
+  GITLEAKS_IMAGE: "ghcr.io/gitleaks/gitleaks:latest"
+  NODE_IMAGE: "node:20-alpine"
+  BIOME_IMAGE: "ghcr.io/biomejs/biome:latest"
+  GIT_DEPTH: "0"
+
+.default_rules: &default_rules
+  rules:
+    - if: >
+        $CI_PIPELINE_SOURCE == "merge_request_event" && 
+        ( $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "dev" || 
+          $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "master" )
+    - if: $CI_COMMIT_BRANCH == "dev"
+    - if: $CI_COMMIT_BRANCH == "master"
+
+# Lint JS/TS/JSON с Biome
+biome:
+  stage: quality
+  tags:
+    - testing
+  script:
+    - >
+      podman run --rm
+      -v "$(pwd):/repo:Z" -w /repo
+      "$BIOME_IMAGE" ci --reporter=gitlab --colors=off
+  allow_failure: true
+#  <<: *default_rules
+
+gitleaks:
+  stage: audit
+  tags:
+    - testing
+  script:
+    - >
+      podman run --rm
+      -v "$(pwd):/repo:Z" -w /repo
+      "$GITLEAKS_IMAGE" detect
+      --redact
+      --no-banner
+      --source=/repo
+      --log-opts="--all"
+      --report-format json
+      --report-path /repo/gitleaks.json
+      --exit-code 1
+  artifacts:
+    when: always
+    paths:
+      - gitleaks.json
+    reports:
+      secret_detection: gitleaks.json
+    expire_in: 14 days
+#  <<: *default_rules

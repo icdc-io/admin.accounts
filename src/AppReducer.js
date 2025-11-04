@@ -1,8 +1,6 @@
 import Immutable from "seamless-immutable";
-/* eslint camelcase: 0 */
 import * as ActionTypes from "./AppConstants";
 
-// eslint-disable-next-line new-cap
 const initialState = Immutable({
 	allAccounts: [],
 	allAccountsFetchStatus: "",
@@ -17,7 +15,6 @@ const initialState = Immutable({
 	missedAccounts: [],
 });
 
-// biome-ignore lint/style/useDefaultParameterLast: <explanation>
 export const AccountsStore = (state = initialState, action) => {
 	switch (action.type) {
 		case `${ActionTypes.ACCOUNTS_AVAILABLE_FETCH}_PENDING`:

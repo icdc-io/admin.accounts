@@ -1,7 +1,11 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.0/schema.json",
-	"organizeImports": {
-		"enabled": true
+	"$schema": "https://biomejs.dev/schemas/2.3.3/schema.json",
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
 	},
 	"vcs": {
 		"enabled": true,
@@ -21,7 +25,13 @@
 		"rules": {
 			"recommended": true,
 			"suspicious": {
-				"noArrayIndexKey": "off"
+				"noArrayIndexKey": "off",
+				"noUnknownAtRules": {
+					"level": "warn",
+					"options": {
+						"ignore": ["@apply", "@plugin"]
+					}
+				}
 			},
 			"a11y": {
 				"useKeyWithClickEvents": "off",
@@ -37,6 +47,11 @@
 			"complexity": {
 				"noForEach": "off"
 			}
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
 		}
 	}
 }
