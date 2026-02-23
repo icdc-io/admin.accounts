@@ -30,8 +30,6 @@ const Disconnect = ({
 		setConfirm("");
 	};
 
-	console.log(accountData?.displayName);
-
 	return (
 		<Dialog open={open} onOpenChange={closeModal}>
 			<DialogContent
