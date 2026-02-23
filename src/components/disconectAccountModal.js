@@ -30,6 +30,8 @@ const Disconnect = ({
 		setConfirm("");
 	};
 
+	console.log(accountData?.displayName);
+
 	return (
 		<Dialog open={open} onOpenChange={closeModal}>
 			<DialogContent
@@ -50,7 +52,7 @@ const Disconnect = ({
 				<hr />
 				<DangerousHTML
 					html={t("confirmModalDisconnect", {
-						service: `<b>${accountData?.displayName}</b>`,
+						service: `<span class="code-block">${accountData?.displayName}</span>`,
 					})}
 				/>
 				<Input value={confirm} onChange={(e) => setConfirm(e.target.value)} />

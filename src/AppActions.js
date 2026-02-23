@@ -255,7 +255,10 @@ const setupAccountAction = (setupBody) => ({
 	type: ActionTypes.SETUP_ACCOUNT,
 	payload: createData(
 		`/api/setup/v1/${ActionTypes.setupAccountUrl(setupBody.accountName)}`,
-		setupBody.quotas,
+		{
+			scope: ["all"],
+			...setupBody.quotas,
+		},
 	),
 });
 
