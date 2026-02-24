@@ -117,29 +117,17 @@ export const initialState = {
 	],
 };
 
-export const quotasBody = [
-	{
-		quotas: {
-			compute: {
-				description: "",
-			},
-			storage: {
-				description: "",
-			},
-			networking: {
-				description: "",
-			},
-			billing_engine: {
-				description: "",
-				// initial_price_plan_id: "",
-			},
-			artifactory: {
-				description: "",
-			},
+export const quotasBody = (accountName = "", accountDisplayName = "") => ({
+	quotas: {
+		compute: {
+			description: accountDisplayName,
 		},
-		accountName: "",
+		billing_engine: {
+			description: accountDisplayName,
+		},
 	},
-];
+	accountName,
+});
 
 export const taxIdOptions = [
 	{ text: "eu_vat", value: "eu_vat" },

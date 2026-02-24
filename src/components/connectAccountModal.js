@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./selectAccount.scss";
 import { Checkbox } from "container/Checkbox";
 import { fetchAccountsAvailableData } from "../AppActions";
+import { quotasBody } from "../constants/createAccountData";
 
 export const fullCellWidth = (content) => {
 	return (
@@ -71,16 +72,7 @@ const SelectAccounts = ({
 		setQuotas(
 			accounts
 				.filter((x) => x.isChecked)
-				.map((el) => ({
-					accountName: el.id,
-					quotas: {
-						compute: { description: el.displayName },
-						storage: { description: el.displayName },
-						networking: { description: el.displayName },
-						billing_engine: { description: el.displayName },
-						artifactory: { description: el.displayName },
-					},
-				})),
+				.map((el) => quotasBody(el.id, el.displayName)),
 		);
 	}, [accounts]);
 
