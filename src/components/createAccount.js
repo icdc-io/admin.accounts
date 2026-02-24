@@ -121,7 +121,7 @@ const CreateAccount = () => {
 			const accountDisplayName = form.getValues("general.display_name");
 			const accountName = form.getValues("name");
 			const setupAccountPayload = quotasBody(accountName, accountDisplayName);
-			setupAccountPayload.quotas.billing_engine.initial_price_plan_id =
+			setupAccountPayload.quotas.billing.initial_price_plan_id =
 				currentPricePlanId;
 
 			dispatch(setupAccount([setupAccountPayload]));
