@@ -122,7 +122,7 @@ export const quotasBody = (accountName = "", accountDisplayName = "") => ({
 		compute: {
 			description: accountDisplayName,
 		},
-		billing_engine: {
+		billing: {
 			description: accountDisplayName,
 		},
 	},
