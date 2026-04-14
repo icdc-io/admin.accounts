@@ -1,8 +1,7 @@
 import { Button } from "container/Button";
 import { Form, useForm } from "container/Form";
-import { Label } from "container/Label";
 import Loader from "container/Loader";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,12 +18,12 @@ import {
 	countryOptions,
 	initialState,
 	quotasBody,
-	taxIExemptOptions,
 	taxIdOptions,
+	taxIExemptOptions,
 } from "../constants/createAccountData";
 import { InputFormField } from "../general/FormInputField";
-import { SelectFormField } from "../general/SelectFormField";
 import { formatI18nMessageToString } from "../general/formatErrorMessages";
+import { SelectFormField } from "../general/SelectFormField";
 import {
 	emailPattern,
 	idValidationPattern,
@@ -84,43 +83,18 @@ const CreateAccount = () => {
 	const form = useForm({
 		defaultValues: initialState,
 	});
-	const [quotas, setQuotas] = useState(quotasBody);
 	const businessType = form.watch("businessType");
 	const isLegalEntity = checkIfLegalEntity(businessType);
+	const getDefaultPricePlan = () =>
+		(pricePlans || []).find((pricePlan) => pricePlan.default);
 
 	useEffect(() => {
 		if (isPricePlansWasFetched) {
-			const defaultPricePlan = pricePlans.find(
-				(pricePlan) => pricePlan.default,
-			);
+			const defaultPricePlan = getDefaultPricePlan();
 			if (defaultPricePlan)
 				form.setValue("initial_price_plan_id", `${defaultPricePlan.id}`);
 		}
 	}, [isPricePlansWasFetched]);
-
-	const onDisplayNameChange = (displayName) =>
-		setQuotas((prevState) => {
-			const allServices = Object.keys(prevState[0].quotas);
-
-			return prevState.map((el) => ({
-				...el,
-				quotas: allServices.reduce((acc, curr) => {
-					acc[curr] = {
-						...el.quotas[curr],
-						description: displayName,
-					};
-					return acc;
-				}, {}),
-			}));
-		});
-
-	const onNameChange = (accountName) =>
-		setQuotas((prevState) =>
-			prevState.map((quotasInfo) => ({
-				...quotasInfo,
-				accountName,
-			})),
-		);
 
 	const changeExtraField = (fieldName) => (value) =>
 		form.setValue(fieldName, value);
@@ -143,10 +117,14 @@ const CreateAccount = () => {
 
 	useEffect(() => {
 		if (accountRegistrationStatus === "fulfilled") {
-			quotas[0].quotas.billing_engine.initial_price_plan_id = +form.getValues(
-				"initial_price_plan_id",
-			);
-			dispatch(setupAccount(quotas));
+			const currentPricePlanId = +form.getValues("initial_price_plan_id");
+			const accountDisplayName = form.getValues("general.display_name");
+			const accountName = form.getValues("name");
+			const setupAccountPayload = quotasBody(accountName, accountDisplayName);
+			setupAccountPayload.quotas.billing.initial_price_plan_id =
+				currentPricePlanId;
+
+			dispatch(setupAccount([setupAccountPayload]));
 		}
 	}, [accountRegistrationStatus]);
 
@@ -165,7 +143,7 @@ const CreateAccount = () => {
 	);
 
 	const onSubmit = (values) => {
-		const { businessType, initial_price_plan_id, ...form } = values;
+		const { businessType, ...form } = values;
 		const isLegalEntity = checkIfLegalEntity(businessType);
 		const body = isLegalEntity
 			? {
@@ -224,7 +202,6 @@ const CreateAccount = () => {
 									name: "general.display_name",
 									placeholder: "enterName",
 									label: "display_name",
-									onChange: onDisplayNameChange,
 									rules: {
 										required: "required",
 										pattern: {
@@ -240,7 +217,6 @@ const CreateAccount = () => {
 									name: "name",
 									placeholder: "enterId",
 									label: "ID",
-									onChange: onNameChange,
 									rules: {
 										required: "required",
 										maxLength: 5,
@@ -382,24 +358,22 @@ const CreateAccount = () => {
 								}}
 							/>
 							{!isLegalEntity && (
-								<>
-									<InputFormField
-										form={form}
-										fieldInfo={{
-											name: "billing.name",
-											placeholder: "enterCustomerFullName",
-											label: "customerFullName",
-											clarification: "customerNamePrompt",
-											rules: {
-												required: "required",
-												pattern: {
-													value: nameWithSpacePattern,
-													message: "nameWithSpace",
-												},
+								<InputFormField
+									form={form}
+									fieldInfo={{
+										name: "billing.name",
+										placeholder: "enterCustomerFullName",
+										label: "customerFullName",
+										clarification: "customerNamePrompt",
+										rules: {
+											required: "required",
+											pattern: {
+												value: nameWithSpacePattern,
+												message: "nameWithSpace",
 											},
-										}}
-									/>
-								</>
+										},
+									}}
+								/>
 							)}
 							{isLegalEntity && (
 								<>

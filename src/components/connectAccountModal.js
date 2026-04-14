@@ -19,11 +19,13 @@ import {
 	TableRow,
 } from "container/Table";
 import PropTypes from "prop-types";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import "./selectAccount.scss";
+import { Checkbox } from "container/Checkbox";
 import { fetchAccountsAvailableData } from "../AppActions";
+import { quotasBody } from "../constants/createAccountData";
 
 export const fullCellWidth = (content) => {
 	return (
@@ -70,28 +72,17 @@ const SelectAccounts = ({
 		setQuotas(
 			accounts
 				.filter((x) => x.isChecked)
-				.map((el) => ({
-					accountName: el.id,
-					quotas: {
-						compute: { description: el.displayName },
-						storage: { description: el.displayName },
-						networking: { description: el.displayName },
-						billing_engine: { description: el.displayName },
-						artifactory: { description: el.displayName },
-					},
-				})),
+				.map((el) => quotasBody(el.id, el.displayName)),
 		);
 	}, [accounts]);
 
-	const toggleCheckBox = (id) => (e) => {
+	const toggleCheckBox = (id) => (checked) => {
 		setAccounts(
-			accounts.map((a) =>
-				a.id === id ? { ...a, isChecked: e.target.checked } : a,
-			),
+			accounts.map((a) => (a.id === id ? { ...a, isChecked: checked } : a)),
 		);
 
 		const itemIndex = selectedAccounts.findIndex((item) => item.id === id);
-		if (itemIndex === -1 && e.target.checked) {
+		if (itemIndex === -1 && checked) {
 			const newItem = accounts.find((item) => item.id === id);
 			if (newItem) {
 				setSelectedAccounts((prev) => [
@@ -99,7 +90,7 @@ const SelectAccounts = ({
 					{ ...newItem, isChecked: true },
 				]);
 			}
-		} else if (itemIndex !== -1 && !e.target.checked) {
+		} else if (itemIndex !== -1 && !checked) {
 			setSelectedAccounts(selectedAccounts.filter((item) => item.id !== id));
 		}
 	};
@@ -155,16 +146,10 @@ const SelectAccounts = ({
 	const selectAccountsList = accounts.map((el) => (
 		<TableRow key={el.id} className="connectElements">
 			<TableCell>
-				<label>
-					<input
-						type="checkbox"
-						value={el.isChecked}
-						onClick={toggleCheckBox(el.id)}
-					/>
-					<span>
-						<div className={el.isChecked ? "check-circle" : ""} />
-					</span>
-				</label>
+				<Checkbox
+					checked={el.isChecked}
+					onCheckedChange={toggleCheckBox(el.id)}
+				/>
 			</TableCell>
 			<TableCell>{el.displayName}</TableCell>
 			<TableCell>{el.idIcdc}</TableCell>

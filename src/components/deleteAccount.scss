@@ -1,6 +1,17 @@
 .wrapper-deleteAccountForm {
   max-width: 640px;
 
+	.code-block {
+		color: #c21a48;
+    font-family: monospace;
+    background-color: #f8f8f8;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+    border: 1px solid #e0e0e0;
+    font-weight: 500;
+	}
+
   .warning {
     background: #ffe4e4;
     border: 1px solid #b95959;

@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import React from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import forbiddenIcon from "../assets/403.svg";

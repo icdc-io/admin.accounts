@@ -5,7 +5,7 @@ const setExceptions = (key) => {
 export const onSearch = (array, searchString) => {
 	const temp = [];
 	if (searchString !== "") {
-		array.map((item) => {
+		array.forEach((item) => {
 			for (const key in item) {
 				if (
 					item[key] &&
