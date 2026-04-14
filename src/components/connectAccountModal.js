@@ -19,7 +19,7 @@ import {
 	TableRow,
 } from "container/Table";
 import PropTypes from "prop-types";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import "./selectAccount.scss";

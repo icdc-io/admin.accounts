@@ -1,0 +1,16 @@
+{
+	"lsp": {
+		"biome": {
+			"settings": {
+				"require_config_file": true
+			}
+		}
+	},
+	"tab_size": 2,
+	"format_on_save": "on",
+	"hard_tabs": true,
+	"code_actions_on_format": {
+		"source.organizeImports.biome": true,
+		"source.fixAll.biome": true
+	}
+}

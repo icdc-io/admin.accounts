@@ -18,12 +18,12 @@ import {
 	countryOptions,
 	initialState,
 	quotasBody,
-	taxIExemptOptions,
 	taxIdOptions,
+	taxIExemptOptions,
 } from "../constants/createAccountData";
 import { InputFormField } from "../general/FormInputField";
-import { SelectFormField } from "../general/SelectFormField";
 import { formatI18nMessageToString } from "../general/formatErrorMessages";
+import { SelectFormField } from "../general/SelectFormField";
 import {
 	emailPattern,
 	idValidationPattern,
@@ -143,7 +143,7 @@ const CreateAccount = () => {
 	);
 
 	const onSubmit = (values) => {
-		const { businessType, initial_price_plan_id, ...form } = values;
+		const { businessType, ...form } = values;
 		const isLegalEntity = checkIfLegalEntity(businessType);
 		const body = isLegalEntity
 			? {
@@ -358,24 +358,22 @@ const CreateAccount = () => {
 								}}
 							/>
 							{!isLegalEntity && (
-								<>
-									<InputFormField
-										form={form}
-										fieldInfo={{
-											name: "billing.name",
-											placeholder: "enterCustomerFullName",
-											label: "customerFullName",
-											clarification: "customerNamePrompt",
-											rules: {
-												required: "required",
-												pattern: {
-													value: nameWithSpacePattern,
-													message: "nameWithSpace",
-												},
+								<InputFormField
+									form={form}
+									fieldInfo={{
+										name: "billing.name",
+										placeholder: "enterCustomerFullName",
+										label: "customerFullName",
+										clarification: "customerNamePrompt",
+										rules: {
+											required: "required",
+											pattern: {
+												value: nameWithSpacePattern,
+												message: "nameWithSpace",
 											},
-										}}
-									/>
-								</>
+										},
+									}}
+								/>
 							)}
 							{isLegalEntity && (
 								<>

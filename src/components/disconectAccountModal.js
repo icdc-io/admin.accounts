@@ -9,7 +9,7 @@ import {
 	DialogTitle,
 } from "container/Modal";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import { useState } from "react";
 import DangerousHTML from "react-dangerous-html";
 import { useTranslation } from "react-i18next";
 import "./deleteAccount.scss";

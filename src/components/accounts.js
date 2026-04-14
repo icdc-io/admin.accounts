@@ -16,7 +16,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "container/Table";
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SelectAccounts from "./connectAccountModal";
 import ConnectProcessModal from "./connectAccountProcess";
@@ -32,7 +32,7 @@ import {
 	destroyInfrastructure,
 	disconnectAccount,
 	disconnectAccountFromOldApi,
-	fetchAccountsAvailableData,
+	// fetchAccountsAvailableData,
 	fetchAccountsData,
 	fetchAndSetFlowStatus,
 	removeAccountFromStateAction,
@@ -151,7 +151,6 @@ const LocationAccount = () => {
 					);
 
 					if (accountsInProgress.length > 0) {
-						// biome-ignore lint/complexity/noForEach: <explanation>
 						accountsInProgress.forEach((account) => {
 							if (account.flow_status) {
 								dispatch(
@@ -194,12 +193,10 @@ const LocationAccount = () => {
 							),
 					);
 
-					// biome-ignore lint/complexity/noForEach: <explanation>
 					notInFetchedAccounts.forEach((account) => {
 						dispatch(removeAccountFromStateAction(account.id));
 					});
 
-					// biome-ignore lint/complexity/noForEach: <explanation>
 					updatedDeletedAccounts.forEach((account) => {
 						dispatch(disconnectAccount({ accountId: account.id, location }));
 					});
@@ -324,7 +321,7 @@ const LocationAccount = () => {
 							<div className="mark">{accountsData.length}</div>
 						</div>
 						<p
-							// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+							// biome-ignore lint/security/noDangerouslySetInnerHtml: allow dangerous html
 							dangerouslySetInnerHTML={{
 								__html: t("accountsDescript", {
 									location: `<b>${location}</b>`,
@@ -336,7 +333,6 @@ const LocationAccount = () => {
 						<div className="accounts-warn">
 							{t("accountsWarn")}
 							{missedAccounts.map((account, index) => (
-								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 								<div key={index} className="accounts-warn-item">
 									<b>{account}</b>&nbsp;
 									<CopyButton content={account} />
