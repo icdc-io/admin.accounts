@@ -143,7 +143,7 @@ const CreateAccount = () => {
 	);
 
 	const onSubmit = (values) => {
-		const { businessType, ...form } = values;
+		const { businessType, initial_price_plan_id, ...form } = values;
 		const isLegalEntity = checkIfLegalEntity(businessType);
 		const body = isLegalEntity
 			? {
