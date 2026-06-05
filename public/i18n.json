@@ -107,7 +107,8 @@
 			"typeOfBusiness": "Type",
 			"unauthorizedInfrastructure": "There is unauthorized infrastructure for the following accounts:",
 			"yesTaxExempt": "Yes",
-			"zipCode": "ZIP/postal code"
+			"zipCode": "ZIP/postal code",
+			"paymentMethod": "Payment Method"
 		}
 	},
 	"ru": {
@@ -218,7 +219,8 @@
 			"typeOfBusiness": "Тип",
 			"unauthorizedInfrastructure": "Существует неавторизованная инфрастуктура для следующих аккаунтов:",
 			"yesTaxExempt": "Есть",
-			"zipCode": "Почтовый Индекс"
+			"zipCode": "Почтовый Индекс",
+			"paymentMethod": "Метод оплаты"
 		}
 	}
 }
